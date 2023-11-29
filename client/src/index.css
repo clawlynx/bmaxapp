@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 100%;
+} /*16px*/
+
+body {
+  background: #e0f2fe;
+  color: #0f172a;
+  font-family: sans-serif;
+  font-weight: 400;
+  line-height: 1;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.fluidwidth {
+  width: 90vw;
+}
+.landingPage {
+  width: 90vw;
+  min-height: calc(100vh - 6rem);
+}
+.form {
+  width: 90vw;
+  @apply max-w-xl bg-white rounded shadow-lg py-8 px-10 my-12 mx-auto;
+}
+.form-label {
+  @apply block text-sm mb-3 capitalize leading-normal;
+}
+.form-input,
+.form-textarea,
+.form-select {
+  @apply w-full py-1 px-3 rounded bg-gray-50 border border-gray-300 text-gray-900;
+}
+.form-input,
+.form-select,
+.form-btn {
+  @apply h-9;
+}
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.form-textarea {
+  height: 7rem;
+}
+
+@media (min-width: 1024px) {
+  .dashboardlayout {
+    grid-template-columns: auto 1fr;
+  }
+}
+
+.vw90 {
+  width: 90vw;
+}
+
+.big-sidebar-container {
+  @apply bg-sky-100 min-h-screen h-full w-60 -ml-60 shadow-md;
+  transition: margin-left 0.3s ease-in-out;
+}
+.show-big-sidebar {
+  margin-left: 0;
+}
+.nav-link {
+  transition: 0.3s ease-in-out all;
+}
+.active {
+  @apply text-blue-700;
+}
+.sidebar-container {
+  transition: 0.3s ease-in-out all;
+  visibility: hidden;
+  @apply fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center -z-10 opacity-0;
+}
+
+.show-sidebar {
+  visibility: visible;
+  @apply z-10 opacity-100;
+}
+.vh93 {
+  height: 93vh;
+}
+.announcement-layout {
+  grid-template-columns: 1fr 9fr 2fr;
+}
+.tablecolumn {
+  @apply text-sm lg:text-lg items-center justify-center border px-3 py-2;
+}

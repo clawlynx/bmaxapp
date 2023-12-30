@@ -2,10 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   showSidebar: true,
-  userInfo: {
-    name: "shafi",
-    role: "teacher",
-  },
+  userInfo: null,
   announcements: [
     {
       id: 1,
@@ -31,8 +28,11 @@ const userSlice = createSlice({
     toggleSidebar: (state) => {
       state.showSidebar = !state.showSidebar;
     },
+    setUser: (state, { payload }) => {
+      state.userInfo = payload;
+    },
   },
 });
 
 export default userSlice.reducer;
-export const { toggleSidebar } = userSlice.actions;
+export const { toggleSidebar, setUser } = userSlice.actions;

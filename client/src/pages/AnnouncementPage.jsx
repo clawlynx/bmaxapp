@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function AnnouncementPage() {
-  const { announcements } = useSelector((state) => state.user);
+  const { announcements, userInfo } = useSelector((state) => state.user);
   return (
     <div>
       <h1 className="text-2xl mb-5 font-semibold">Announcements</h1>
@@ -29,10 +29,20 @@ function AnnouncementPage() {
                 <td className=" tablecolumn">
                   <Link
                     to={`/dashboard/announcements/${x.id}`}
-                    className="bg-blue-700 text-white px-2 py-2 rounded hover:bg-blue-500 text-sm md:text-md cursor-pointer"
+                    className="bg-blue-700 text-white px-2 py-2 rounded hover:bg-blue-500 text-sm md:text-md cursor-pointer me-2"
                   >
                     Details
                   </Link>
+                  {userInfo.role === "admin" && (
+                    <>
+                      <Link className="bg-gray-700 text-white px-2 py-2 rounded hover:bg-gray-500 text-sm md:text-md cursor-pointer me-2">
+                        Edit
+                      </Link>
+                      <button className="bg-red-700 text-white px-2 py-2 rounded hover:bg-red-500 text-sm md:text-md cursor-pointer">
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

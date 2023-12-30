@@ -1,10 +1,29 @@
 import React, { useState } from "react";
 import { FaCaretDown, FaUserCircle } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutMutation } from "../slices/userApiSlice";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../slices/userSlice";
+import { toast } from "react-toastify";
 
 function LogoutComponent() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showLogout, setShowLogout] = useState(false);
   const { userInfo } = useSelector((state) => state.user);
+  const [logout] = useLogoutMutation();
+
+  async function handleLogout() {
+    try {
+      await logout().unwrap();
+      dispatch(setUser(null));
+      navigate("/");
+      toast.success("successfully logged out");
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.data?.msg || err?.error);
+    }
+  }
   return (
     <div className=" relative">
       <button
@@ -13,7 +32,7 @@ function LogoutComponent() {
         onClick={() => setShowLogout(!showLogout)}
       >
         <FaUserCircle />
-        <p className="hidden md:block">{userInfo.name.toUpperCase()}</p>
+        <p className="hidden md:block">{userInfo?.name?.toUpperCase()}</p>
         <FaCaretDown />
       </button>
       <div
@@ -21,7 +40,11 @@ function LogoutComponent() {
           showLogout ? "visible" : "invisible"
         }`}
       >
-        <button type="button" className=" p-2 text-white w-full h-full">
+        <button
+          type="button"
+          className=" p-2 text-white w-full h-full"
+          onClick={handleLogout}
+        >
           Logout
         </button>
       </div>

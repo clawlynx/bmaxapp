@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import FormElement from "../components/FormElement";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormSelectElement from "../components/FormSelectElement";
 import { branches, courses } from "../../../utils/constants";
+import { toast } from "react-toastify";
+import { useRegisterMutation } from "../slices/userApiSlice";
+
+import Loading from "../components/Loading";
 
 function RegisterPage() {
   const [name, setName] = useState("");
@@ -15,6 +19,36 @@ function RegisterPage() {
   const [isTeacher, setIsTeacher] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
+  const [register, { isLoading }] = useRegisterMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Passwords does not match");
+      return;
+    } else {
+      try {
+        const res = await register({
+          name,
+          email,
+          phone,
+          address,
+          age,
+          branch,
+          course,
+          isTeacher,
+          password,
+        });
+        toast.success("successfully registered");
+        navigate("/dashboard");
+      } catch (err) {
+        toast.error(err?.data?.msg || err?.error);
+      }
+    }
+  };
+
   return (
     <div className=" min-h-screen grid items-center">
       <form className="form max-w-md border-t-4 border-blue-700">
@@ -104,9 +138,12 @@ function RegisterPage() {
         <button
           type="submit"
           className="bg-blue-700 w-full py-2 mt-4 text-white rounded-sm hover:bg-blue-500"
+          disabled={isLoading}
+          onClick={handleSubmit}
         >
           Register
         </button>
+        {isLoading && <Loading />}
         <p className="mt-4 text-center">
           Already registered?{" "}
           <Link to={"/login"} className="text-blue-700">

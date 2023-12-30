@@ -44,7 +44,7 @@ export default function Error() {
         </p>
         <Link
           className="text-primary capitalize bg-blue-700 text-white px-2 py-2"
-          to={"/dashboard"}
+          to={"/"}
         >
           back home
         </Link>

@@ -99,3 +99,18 @@ h5 {
 .tablecolumn {
   @apply text-sm lg:text-lg items-center justify-center border px-3 py-2;
 }
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  width: 6rem;
+  height: 6rem;
+  border: 5px solid #64748b;
+  border-radius: 50%;
+  border-top-color: rgb(17, 0, 255);
+  animation: spinner 0.6s linear infinite;
+}

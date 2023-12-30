@@ -12,7 +12,7 @@ function NavLinks({ isSmall }) {
   }
   return (
     <div className="pt-8 flex flex-col">
-      {userInfo.role === "student" &&
+      {userInfo?.role === "student" &&
         studentLinks.map((item) => {
           const { text, path } = item;
           return (
@@ -28,7 +28,7 @@ function NavLinks({ isSmall }) {
             </NavLink>
           );
         })}
-      {userInfo.role === "admin" &&
+      {userInfo?.role === "admin" &&
         adminLinks.map((item) => {
           const { text, path } = item;
           return (
@@ -44,7 +44,7 @@ function NavLinks({ isSmall }) {
             </NavLink>
           );
         })}
-      {userInfo.role === "teacher" &&
+      {userInfo?.role === "teacher" &&
         teacherLinks.map((item) => {
           const { text, path } = item;
           return (

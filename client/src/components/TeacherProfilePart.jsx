@@ -23,7 +23,7 @@ function TeacherProfilePart() {
           {userInfo?.teacherDetails?.hasVerified ? (
             <span>{userInfo.teacherDetails.currentStudents.length}</span>
           ) : (
-            <span className=" bg-red-600 px-2 py-1">N/A</span>
+            <span>N/A</span>
           )}
         </p>
       </div>
@@ -34,7 +34,7 @@ function TeacherProfilePart() {
           {userInfo?.teacherDetails?.hasVerified ? (
             <span>{userInfo.teacherDetails.totalStudents.length}</span>
           ) : (
-            <span className=" bg-red-600 px-2 py-1">N/A</span>
+            <span className=" ">N/A</span>
           )}
         </p>
       </div>

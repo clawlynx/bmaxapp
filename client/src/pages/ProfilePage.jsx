@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import StudentProfilePart from "../components/StudentProfilePart";
 import TeacherProfilePart from "../components/TeacherProfilePart";
 import AdminProfilePart from "../components/AdminProfilePart";
+import { Link } from "react-router-dom";
 
 function ProfilePage() {
   const { userInfo } = useSelector((state) => state.user);
   return (
-    <div className="flex flex-col justify-center">
+    <div>
       <div className="flex flex-col justify-center items-center">
         <div className=" text-9xl text-blue-800">
           <PiUserCircleThin />
@@ -37,11 +38,37 @@ function ProfilePage() {
           <p>{userInfo?.branch}</p>
         </div>
       </div>
-      <div className="mt-3 bg-blue-100 p-6">
+      <div className="mt-3 mb-6 bg-blue-100 p-6">
+        <div className="flex justify-start gap-12 mb-5">
+          <p>EMAIL</p>
+          <p>:</p>
+          <p>{userInfo?.email}</p>
+        </div>
+        <div className="flex justify-start gap-12 mb-5">
+          <p>ADDRESS</p>
+          <p>:</p>
+          <p>{userInfo?.address}</p>
+        </div>
+        <div className="flex justify-start gap-12 mb-5">
+          <p>PHONE</p>
+          <p>:</p>
+          <p>{userInfo?.phone}</p>
+        </div>
+        <div className="flex justify-start gap-12 mb-5">
+          <p>AGE</p>
+          <p>:</p>
+          <p>{userInfo?.age}</p>
+        </div>
         {userInfo?.role === "student" && <StudentProfilePart />}
         {userInfo?.role === "teacher" && <TeacherProfilePart />}
         {userInfo?.role === "admin" && <AdminProfilePart />}
       </div>
+      <Link
+        to={"/dashboard/profile/edit"}
+        className=" bg-blue-700 text-white px-2 py-2 rounded-md hover:bg-blue-500"
+      >
+        Edit Profile
+      </Link>
     </div>
   );
 }

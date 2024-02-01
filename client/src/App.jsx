@@ -14,6 +14,9 @@ import AllStudentsAdminPage from "./pages/AllStudentsAdminPage";
 import AllTeachersAdminPage from "./pages/AllTeachersAdminPage";
 import Error from "./pages/Error";
 import SingleAnnouncementPage from "./pages/SingleAnnouncementPage";
+import EditProfilePage from "./pages/EditProfilePage";
+import MarkingPage from "./pages/MarkingPage";
+import VerificationPage from "./pages/VerificationPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -64,8 +67,18 @@ function App() {
             },
             {
               path: "evaluate",
-              element: <EvaluatePage />,
+              children: [
+                {
+                  index: true,
+                  element: <EvaluatePage />,
+                },
+                {
+                  path: "mark/:id",
+                  element: <MarkingPage />,
+                },
+              ],
             },
+
             {
               path: "all-students",
               element: <AllStudentsAdminPage />,
@@ -73,6 +86,14 @@ function App() {
             {
               path: "all-teachers",
               element: <AllTeachersAdminPage />,
+            },
+            {
+              path: "verification",
+              element: <VerificationPage />,
+            },
+            {
+              path: "profile/edit",
+              element: <EditProfilePage />,
             },
           ],
         },

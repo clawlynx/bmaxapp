@@ -74,3 +74,18 @@ export const getUser = async (req, res) => {
   if (!user) throw new NotFoundError("no user found");
   res.status(200).json(user);
 };
+
+export const updateProfile = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) throw new NotFoundError("no user found");
+  user.name = req.body.name;
+  user.email = req.body.email;
+  user.address = req.body.address;
+  user.phone = req.body.phone;
+  user.age = req.body.age;
+  if (req.body.password !== "") {
+    user.password = await hashPassword(req.body.password);
+  }
+  await user.save();
+  res.status(200).json(user);
+};

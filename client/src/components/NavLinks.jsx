@@ -1,11 +1,14 @@
 import React from "react";
 import { adminLinks, studentLinks, teacherLinks } from "../utils/links";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../slices/userSlice";
 
 function NavLinks({ isSmall }) {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const pathname = location.pathname.toString();
+
   const { userInfo } = useSelector((state) => state.user);
   function toggle() {
     dispatch(toggleSidebar());
@@ -19,7 +22,9 @@ function NavLinks({ isSmall }) {
             <NavLink
               to={path}
               key={text}
-              className="nav-link flex items-center gap-2 py-4 lg:ps-10 px-0 capitalize hover:text-blue-700 hover:ms-5"
+              className={`nav-link flex items-center gap-2 py-4 lg:ps-10 px-0 capitalize hover:text-blue-700 hover:ms-5 ${
+                pathname.includes(text) ? "text-blue-700" : ""
+              }`}
               onClick={isSmall && toggle}
               end
             >
@@ -35,7 +40,9 @@ function NavLinks({ isSmall }) {
             <NavLink
               to={path}
               key={text}
-              className="nav-link flex items-center gap-2 py-4 lg:ps-10 px-0 capitalize hover:text-blue-700 hover:ms-5"
+              className={`nav-link flex items-center gap-2 py-4 lg:ps-10 px-0 capitalize hover:text-blue-700 hover:ms-5 ${
+                pathname.includes(text) ? "text-blue-700" : ""
+              }`}
               onClick={isSmall && toggle}
               end
             >
@@ -51,7 +58,9 @@ function NavLinks({ isSmall }) {
             <NavLink
               to={path}
               key={text}
-              className="nav-link flex items-center gap-2 py-4 lg:ps-10 px-0 capitalize hover:text-blue-700 hover:ms-5"
+              className={`nav-link flex items-center gap-2 py-4 lg:ps-10 px-0 capitalize hover:text-blue-700 hover:ms-5 ${
+                pathname.includes(text) ? "text-blue-700" : ""
+              }`}
               onClick={isSmall && toggle}
               end
             >

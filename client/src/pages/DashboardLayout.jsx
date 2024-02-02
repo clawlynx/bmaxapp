@@ -14,7 +14,7 @@ function DashboardLayout() {
   const getUser = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/user");
-      console.log(data);
+
       dispatch(setUser(data));
     } catch (error) {
       navigate("/");

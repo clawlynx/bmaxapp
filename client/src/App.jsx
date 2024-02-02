@@ -17,6 +17,8 @@ import SingleAnnouncementPage from "./pages/SingleAnnouncementPage";
 import EditProfilePage from "./pages/EditProfilePage";
 import MarkingPage from "./pages/MarkingPage";
 import VerificationPage from "./pages/VerificationPage";
+import NewAnnouncement from "./pages/NewAnnouncement";
+import EditAnnouncement from "./pages/EditAnnouncement";
 
 function App() {
   const router = createBrowserRouter([
@@ -50,8 +52,16 @@ function App() {
               element: <AnnouncementPage />,
             },
             {
+              path: "announcements/new",
+              element: <NewAnnouncement />,
+            },
+            {
               path: "announcements/:id",
               element: <SingleAnnouncementPage />,
+            },
+            {
+              path: "announcements/edit/:id",
+              element: <EditAnnouncement />,
             },
             {
               path: "attendance",

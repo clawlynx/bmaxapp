@@ -27,6 +27,26 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createAnnouncement: builder.mutation({
+      query: (data) => ({
+        url: `${ADMIN_URL}/createannouncement`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    deleteAnnouncement: builder.mutation({
+      query: (announcementId) => ({
+        url: `${ADMIN_URL}/deleteannouncement/${announcementId}`,
+        method: "DELETE",
+      }),
+    }),
+    updateAnnouncement: builder.mutation({
+      query: (data) => ({
+        url: `${ADMIN_URL}/updateannouncement/${data.id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -35,4 +55,7 @@ export const {
   useGetAllTeachersQuery,
   useGetAllStudentsQuery,
   useGetAllPendingVerificationQuery,
+  useCreateAnnouncementMutation,
+  useDeleteAnnouncementMutation,
+  useUpdateAnnouncementMutation,
 } = adminApiSlice;

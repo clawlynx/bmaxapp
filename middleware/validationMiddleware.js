@@ -66,3 +66,8 @@ export const validateUpdateProfileInput = withValidationErrors([
   body("address").notEmpty().withMessage("Address is required. "),
   body("age").notEmpty().withMessage("Age is required. "),
 ]);
+
+export const validateAnnouncementInput = withValidationErrors([
+  body("title").notEmpty().withMessage("Title is required"),
+  body("content").notEmpty().withMessage("Content is required"),
+]);

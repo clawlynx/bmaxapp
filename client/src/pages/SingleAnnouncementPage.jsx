@@ -1,8 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useGetSingleAnnouncementQuery } from "../slices/userApiSlice";
+import Loading from "../components/Loading";
 
 function SingleAnnouncementPage() {
-  return (
+  const { id } = useParams();
+  const { data: announcement, isLoading } = useGetSingleAnnouncementQuery(id);
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="w-full">
       <Link
         to={"/dashboard/announcements"}
@@ -10,10 +16,9 @@ function SingleAnnouncementPage() {
       >
         Go Back
       </Link>
-      <h1 className="mt-7 mb-5 text-2xl">Title</h1>
+      <h1 className="mt-7 mb-5 text-2xl">{announcement.title}</h1>
       <p className=" leading-6 max-w-xs md:max-w-full ">
-        {" "}
-        hellohellohellohellohellohe llohellohellohellohellohello
+        {announcement.content}
       </p>
     </div>
   );

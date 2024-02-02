@@ -54,7 +54,7 @@ function EditProfilePage() {
   }, [userInfo]);
   return (
     <div>
-      <h1 className="text-xl md:text-3xl font-semibold">Edit Your Profile</h1>
+      <h1 className="text-xl md:text-2xl font-semibold">Edit Your Profile</h1>
       <form className="mt-5 max-w-md">
         <FormElement
           type={"text"}

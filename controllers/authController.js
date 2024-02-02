@@ -1,4 +1,5 @@
 import { NotFoundError, UnauthenticatedError } from "../errors/customErrors.js";
+import Announcement from "../models/Announcement.js";
 import User from "../models/UserModel.js";
 import { comparePassword, hashPassword } from "../utils/passwordutils.js";
 import { createJWT } from "../utils/tokenUtils.js";
@@ -88,4 +89,17 @@ export const updateProfile = async (req, res) => {
   }
   await user.save();
   res.status(200).json(user);
+};
+
+export const getAnnouncements = async (req, res) => {
+  const announcements = await Announcement.find();
+  if (!announcements) throw new NotFoundError("No announcements");
+  announcements.reverse();
+  res.status(200).json(announcements);
+};
+
+export const getSingleAnnouncement = async (req, res) => {
+  const announcement = await Announcement.findById(req.params.id);
+  if (!announcement) throw new NotFoundError("No announcement found");
+  res.status(200).json(announcement);
 };

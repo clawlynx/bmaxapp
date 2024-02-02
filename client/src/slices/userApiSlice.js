@@ -36,6 +36,19 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAnnouncements: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/getannouncements`,
+      }),
+
+      keepUnusedDataFor: 5,
+    }),
+    getSingleAnnouncement: builder.query({
+      query: (id) => ({
+        url: `${USERS_URL}/announcements/${id}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -45,4 +58,6 @@ export const {
   useLogoutMutation,
   useLoginMutation,
   useUpdateProfileMutation,
+  useGetAnnouncementsQuery,
+  useGetSingleAnnouncementQuery,
 } = usersApiSlice;

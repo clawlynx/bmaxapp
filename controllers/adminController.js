@@ -1,4 +1,5 @@
 import { NotFoundError } from "../errors/customErrors.js";
+import Announcement from "../models/Announcement.js";
 import User from "../models/UserModel.js";
 
 export const totalCount = async (req, res) => {
@@ -25,4 +26,36 @@ export const getPendingVerifications = async (req, res) => {
   const users = await User.find({ "teacherDetails.hasVerified": false });
   if (!users) throw new NotFoundError("No Users found");
   res.status(200).json(users);
+};
+
+export const createAnnouncement = async (req, res) => {
+  const { title, content } = req.body;
+  const date = new Date(Date.now()).toISOString();
+  const createdBy = req.user._id;
+  const newAnnouncement = new Announcement({
+    title,
+    content,
+    date,
+    createdBy,
+  });
+  await newAnnouncement.save();
+  res.status(201).json(newAnnouncement);
+};
+
+export const deleteAnnouncement = async (req, res) => {
+  const announcement = await Announcement.findById(req.params.id);
+  if (!announcement) throw new NotFoundError("No Announcement Found");
+  await Announcement.deleteOne({ _id: announcement._id });
+  res.status(200).json({ msg: "Successfully deleted" });
+};
+
+export const updateAnnouncement = async (req, res) => {
+  const { title, content } = req.body;
+  console.log(req.params.id);
+  const announcement = await Announcement.findById(req.params.id);
+  if (!announcement) throw new NotFoundError("No announcement found");
+  announcement.title = title;
+  announcement.content = content;
+  const updatedAnnouncement = await announcement.save();
+  res.status(200).json(updatedAnnouncement);
 };

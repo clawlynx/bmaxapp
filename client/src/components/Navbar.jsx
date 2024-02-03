@@ -17,13 +17,15 @@ function Navbar() {
           <FaAlignLeft />
         </button>
         <div className="flex items-center justify-center">
-          <div className="flex items-center justify-center gap-3 my-0 mx-auto lg:hidden">
+          <div className="flex items-center justify-center gap-0 md:gap-3 my-0 mx-auto  lg:hidden">
             <img
               src="main.png"
-              className="w-10 h-10 md:w-12 md:h-12"
+              className="w-10 h-10 md:w-12 md:h-12 "
               alt="logo"
             ></img>
-            <h3 className="text-blue-700 text-2xl font-bold">TS Portal</h3>
+            <h3 className="text-blue-700 text-base md:text-2xl font-bold">
+              TS Portal
+            </h3>
           </div>
           <h4 className="hidden lg:block text-xl font-semibold">Dashboard</h4>
         </div>

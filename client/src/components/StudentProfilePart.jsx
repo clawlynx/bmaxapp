@@ -5,12 +5,12 @@ function StudentProfilePart() {
   const { userInfo } = useSelector((state) => state.user);
   return (
     <div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>MY TUTOR</p>
         <p>:</p>
         <p>{userInfo?.studentDetails?.teacher}</p>
       </div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>CLASS STARTED</p>
         <p>:</p>
         <p>
@@ -19,7 +19,7 @@ function StudentProfilePart() {
             : userInfo.studentDetails.joinedOn}
         </p>
       </div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>CLASS ENDED</p>
         <p>:</p>
         <p>
@@ -28,17 +28,17 @@ function StudentProfilePart() {
             : userInfo.studentDetails.endedOn}
         </p>
       </div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>TOTAL PRESENT</p>
         <p>:</p>
         <p>{}</p>
       </div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>TOTAL ABSENT</p>
         <p>:</p>
         <p>{}</p>
       </div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>AVG. PERFORMANCE</p>
         <p>:</p>
         <p>{}</p>

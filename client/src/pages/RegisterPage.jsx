@@ -53,10 +53,16 @@ function RegisterPage() {
     <div className=" min-h-screen grid items-center">
       <form className="form max-w-md border-t-4 border-blue-700">
         <div className=" flex items-center justify-center gap-3 my-0 mx-auto mb-5">
-          <img className=" w-16 h-16" src="main.png" alt="logo"></img>
-          <h1 className="font-semibold text-4xl">Bemax TS Portal</h1>
+          <img
+            className="w-10 h-10 md:w-16 md:h-16"
+            src="main.png"
+            alt="logo"
+          ></img>
+          <h1 className="font-semibold text-xl md:text-4xl">Bemax TS Portal</h1>
         </div>
-        <h4 className=" text-center mb-5 text-xl font-semibold">Register</h4>
+        <h4 className=" text-center mb-5 text-base md:text-xl font-semibold">
+          Register
+        </h4>
         <FormElement
           type={"text"}
           name={"name"}

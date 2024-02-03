@@ -4,9 +4,13 @@ import {
   allTeachers,
   createAnnouncement,
   deleteAnnouncement,
+  deleteStudent,
+  deleteTeacher,
   getPendingVerifications,
+  getSingleTeacher,
   totalCount,
   updateAnnouncement,
+  verifyTeacher,
 } from "../controllers/adminController.js";
 import { validateAnnouncementInput } from "../middleware/validationMiddleware.js";
 
@@ -27,4 +31,8 @@ router.patch(
   validateAnnouncementInput,
   updateAnnouncement
 );
+router.delete("/deleteteacher/:id", deleteTeacher);
+router.delete("/deletestudent/:id", deleteStudent);
+router.get("/teacher/:id", getSingleTeacher);
+router.patch("/verify/:id", verifyTeacher);
 export default router;

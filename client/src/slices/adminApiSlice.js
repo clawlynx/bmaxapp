@@ -25,7 +25,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${ADMIN_URL}/verification`,
       }),
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 2,
     }),
     createAnnouncement: builder.mutation({
       query: (data) => ({
@@ -47,6 +47,30 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    deleteTeacher: builder.mutation({
+      query: (teacherId) => ({
+        url: `${ADMIN_URL}/deleteteacher/${teacherId}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteStudent: builder.mutation({
+      query: (studentId) => ({
+        url: `${ADMIN_URL}/deletestudent/${studentId}`,
+        method: "DELETE",
+      }),
+    }),
+    getSingleTeacher: builder.query({
+      query: (teacherId) => ({
+        url: `${ADMIN_URL}/teacher/${teacherId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    verifyTeacher: builder.mutation({
+      query: (teacherId) => ({
+        url: `${ADMIN_URL}/verify/${teacherId}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -58,4 +82,8 @@ export const {
   useCreateAnnouncementMutation,
   useDeleteAnnouncementMutation,
   useUpdateAnnouncementMutation,
+  useDeleteTeacherMutation,
+  useDeleteStudentMutation,
+  useGetSingleTeacherQuery,
+  useVerifyTeacherMutation,
 } = adminApiSlice;

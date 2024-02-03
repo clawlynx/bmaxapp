@@ -19,6 +19,7 @@ import MarkingPage from "./pages/MarkingPage";
 import VerificationPage from "./pages/VerificationPage";
 import NewAnnouncement from "./pages/NewAnnouncement";
 import EditAnnouncement from "./pages/EditAnnouncement";
+import VerifySinglePage from "./pages/VerifySinglePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -100,6 +101,10 @@ function App() {
             {
               path: "verification",
               element: <VerificationPage />,
+            },
+            {
+              path: "verification/:id",
+              element: <VerifySinglePage />,
             },
             {
               path: "profile/edit",

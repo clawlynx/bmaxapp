@@ -1,16 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
-import { useGetAllStudentsQuery } from "../slices/adminApiSlice";
+import {
+  useDeleteStudentMutation,
+  useGetAllStudentsQuery,
+} from "../slices/adminApiSlice";
+import Modal from "./Modal";
+import { toast } from "react-toastify";
 
 function AdminStudentList() {
-  const { data: allStudents, isLoading } = useGetAllStudentsQuery();
+  const { data: allStudents, refetch, isLoading } = useGetAllStudentsQuery();
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+
+  const [deleteStudent, { isLoading: loadingDelete }] =
+    useDeleteStudentMutation();
+
+  function cancelFunction() {
+    setConfirmDelete(false);
+    setDeleteId("");
+  }
+  async function confirmFunction() {
+    try {
+      await deleteStudent(deleteId);
+      setConfirmDelete(false);
+      setDeleteId("");
+      refetch();
+      toast.success("Student deleted");
+    } catch (error) {
+      toast.error(error?.data?.msg);
+    }
+  }
 
   return isLoading ? (
     <Loading />
   ) : (
     <section className=" mt-5">
+      {confirmDelete && (
+        <Modal
+          title={"Are you sure want to delete?"}
+          function1={cancelFunction}
+          function2={confirmFunction}
+        />
+      )}
       <h4 className="form-title mb-8 text-2xl font-semibold">
         {allStudents.totalStudents}
         {` student${allStudents.totalStudents === 0 ? "" : "'s"} found`}
@@ -43,7 +76,13 @@ function AdminStudentList() {
                     <Link className="bg-gray-700 text-white  px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-gray-500 text-xs md:text-md cursor-pointer">
                       Edit
                     </Link>
-                    <button className="bg-red-700 text-white  px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-red-500 text-xs md:text-md cursor-pointer">
+                    <button
+                      className="bg-red-700 text-white  px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-red-500 text-xs md:text-md cursor-pointer"
+                      onClick={() => {
+                        setConfirmDelete(true);
+                        setDeleteId(x._id);
+                      }}
+                    >
                       Delete
                     </button>
                   </td>

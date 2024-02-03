@@ -11,15 +11,17 @@ function ProfilePage() {
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
-        <div className=" text-9xl text-blue-800">
+        <div className="text-5xl md:text-9xl text-blue-800">
           <PiUserCircleThin />
         </div>
-        <h1 className=" text-3xl font-bold">{userInfo?.name?.toUpperCase()}</h1>
+        <h1 className="text-xl md:text-3xl font-bold">
+          {userInfo?.name?.toUpperCase()}
+        </h1>
         <p className=" font-semibold mt-2">{userInfo?.role?.toUpperCase()}</p>
       </div>
       <div className="mt-10">
         {userInfo?.role !== "admin" && (
-          <div className=" flex justify-center gap-10 mb-5 text-lg font-semibold">
+          <div className=" flex justify-center gap-4 md:gap-10 mb-5 text-base md:text-lg font-semibold">
             <p>COURSE</p>
             <p>:</p>
             <p>
@@ -32,29 +34,29 @@ function ProfilePage() {
           </div>
         )}
 
-        <div className=" flex justify-center gap-10 text-lg font-semibold">
+        <div className=" flex justify-center gap-4 md:gap-10 text-base md:text-lg font-semibold">
           <p>BRANCH</p>
           <p>:</p>
           <p>{userInfo?.branch}</p>
         </div>
       </div>
-      <div className="mt-3 mb-6 bg-blue-100 p-6">
-        <div className="flex justify-start gap-12 mb-5">
+      <div className="mt-3 mb-6 bg-blue-100 p-2 md:p-6 text-sm md:text-base">
+        <div className="flex justify-start gap-4 md:gap-12 mb-5">
           <p>EMAIL</p>
           <p>:</p>
           <p>{userInfo?.email}</p>
         </div>
-        <div className="flex justify-start gap-12 mb-5">
+        <div className="flex justify-start gap-3 md:gap-12 mb-5">
           <p>ADDRESS</p>
           <p>:</p>
           <p>{userInfo?.address}</p>
         </div>
-        <div className="flex justify-start gap-12 mb-5">
+        <div className="flex justify-start gap-4 md:gap-12 mb-5">
           <p>PHONE</p>
           <p>:</p>
           <p>{userInfo?.phone}</p>
         </div>
-        <div className="flex justify-start gap-12 mb-5">
+        <div className="flex justify-start gap-4 md:gap-12 mb-5">
           <p>AGE</p>
           <p>:</p>
           <p>{userInfo?.age}</p>

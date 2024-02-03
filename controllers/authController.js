@@ -4,6 +4,7 @@ import User from "../models/UserModel.js";
 import { comparePassword, hashPassword } from "../utils/passwordutils.js";
 import { createJWT } from "../utils/tokenUtils.js";
 
+//registering a new user
 export const RegisterUser = async (req, res) => {
   const {
     name,
@@ -46,6 +47,7 @@ export const RegisterUser = async (req, res) => {
   res.status(201).json({ msg: "registered successfully" });
 };
 
+//logging in user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -62,6 +64,7 @@ export const loginUser = async (req, res) => {
   res.status(200).json({ msg: "loggedin successfully" });
 };
 
+//logging out user
 export const logout = async (req, res) => {
   res.cookie("token", "logout", {
     httpOnly: true,
@@ -70,12 +73,14 @@ export const logout = async (req, res) => {
   res.status(200).json({ msg: "successfully logged out" });
 };
 
+//get userinfo (self)
 export const getUser = async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) throw new NotFoundError("no user found");
   res.status(200).json(user);
 };
 
+//update userprofile(self)
 export const updateProfile = async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) throw new NotFoundError("no user found");
@@ -91,6 +96,7 @@ export const updateProfile = async (req, res) => {
   res.status(200).json(user);
 };
 
+//get list of all announcements
 export const getAnnouncements = async (req, res) => {
   const announcements = await Announcement.find();
   if (!announcements) throw new NotFoundError("No announcements");
@@ -98,6 +104,7 @@ export const getAnnouncements = async (req, res) => {
   res.status(200).json(announcements);
 };
 
+//get a single announcement
 export const getSingleAnnouncement = async (req, res) => {
   const announcement = await Announcement.findById(req.params.id);
   if (!announcement) throw new NotFoundError("No announcement found");

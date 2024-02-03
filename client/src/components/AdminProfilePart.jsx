@@ -8,12 +8,12 @@ function AdminProfilePart() {
     <Loading />
   ) : (
     <div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>TOTAL STUDENTS</p>
         <p>:</p>
         <p>{summary.totalStudents}</p>
       </div>
-      <div className="flex justify-start gap-12 mb-5">
+      <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>TOTAL TEACHERS</p>
         <p>:</p>
         <p>{summary.totalTeachers}</p>

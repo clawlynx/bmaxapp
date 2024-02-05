@@ -68,10 +68,16 @@ function TeacherList() {
                       : x.course.substring(0, 5)}
                   </td>
                   <td className=" tablecolumn flex flex-col gap-1 justify-center items-center md:flex-row">
-                    <Link className="bg-blue-700 text-white px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-blue-500 text-xs md:text-md cursor-pointer">
+                    <Link
+                      to={`/dashboard/all-teachers/${x._id}`}
+                      className="bg-blue-700 text-white px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-blue-500 text-xs md:text-md cursor-pointer"
+                    >
                       Details
                     </Link>
-                    <Link className="bg-gray-700 text-white  px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-gray-500 text-xs md:text-md cursor-pointer">
+                    <Link
+                      to={`/dashboard/all-teachers/edit/${x._id}`}
+                      className="bg-gray-700 text-white  px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-gray-500 text-xs md:text-md cursor-pointer"
+                    >
                       Edit
                     </Link>
                     <button

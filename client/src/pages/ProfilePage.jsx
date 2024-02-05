@@ -5,6 +5,7 @@ import StudentProfilePart from "../components/StudentProfilePart";
 import TeacherProfilePart from "../components/TeacherProfilePart";
 import AdminProfilePart from "../components/AdminProfilePart";
 import { Link } from "react-router-dom";
+import DetailComponent from "../components/DetailComponent";
 
 function ProfilePage() {
   const { userInfo } = useSelector((state) => state.user);
@@ -41,26 +42,10 @@ function ProfilePage() {
         </div>
       </div>
       <div className="mt-3 mb-6 bg-blue-100 p-2 md:p-6 text-sm md:text-base">
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>EMAIL</p>
-          <p>:</p>
-          <p>{userInfo?.email}</p>
-        </div>
-        <div className="flex justify-start gap-3 md:gap-12 mb-5">
-          <p>ADDRESS</p>
-          <p>:</p>
-          <p>{userInfo?.address}</p>
-        </div>
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>PHONE</p>
-          <p>:</p>
-          <p>{userInfo?.phone}</p>
-        </div>
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>AGE</p>
-          <p>:</p>
-          <p>{userInfo?.age}</p>
-        </div>
+        <DetailComponent title={"EMAIL"} detail={userInfo?.email} />
+        <DetailComponent title={"ADDRESS"} detail={userInfo?.address} />
+        <DetailComponent title={"PHONE"} detail={userInfo?.phone} />
+        <DetailComponent title={"AGE"} detail={userInfo?.age} />
         {userInfo?.role === "student" && <StudentProfilePart />}
         {userInfo?.role === "teacher" && <TeacherProfilePart />}
         {userInfo?.role === "admin" && <AdminProfilePart />}

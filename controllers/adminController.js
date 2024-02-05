@@ -1,6 +1,7 @@
 import { NotFoundError } from "../errors/customErrors.js";
 import Announcement from "../models/Announcement.js";
 import User from "../models/UserModel.js";
+import { hashPassword } from "../utils/passwordutils.js";
 
 //total count of teacher and students
 export const totalCount = async (req, res) => {
@@ -58,7 +59,6 @@ export const deleteAnnouncement = async (req, res) => {
 //update an existing announcement
 export const updateAnnouncement = async (req, res) => {
   const { title, content } = req.body;
-  console.log(req.params.id);
   const announcement = await Announcement.findById(req.params.id);
   if (!announcement) throw new NotFoundError("No announcement found");
   announcement.title = title;
@@ -90,6 +90,13 @@ export const getSingleTeacher = async (req, res) => {
   res.status(200).json(teacher);
 };
 
+//get a single student
+export const getSingleStudent = async (req, res) => {
+  const student = await User.findById(req.params.id);
+  if (!student) throw new NotFoundError("No student found");
+  res.status(200).json(student);
+};
+
 //verify teacher
 export const verifyTeacher = async (req, res) => {
   const teacher = await User.findById(req.params.id);
@@ -99,4 +106,40 @@ export const verifyTeacher = async (req, res) => {
   teacher.teacherDetails.status = "ACTIVE";
   await teacher.save();
   res.status(200).json({ msg: "Successfully verified" });
+};
+
+//update a teacher
+export const editTeacher = async (req, res) => {
+  const teacher = await User.findById(req.params.id);
+  if (!teacher) throw new NotFoundError("No Teacher Found");
+  teacher.name = req.body.name;
+  teacher.address = req.body.address;
+  teacher.age = req.body.age;
+  teacher.email = req.body.email;
+  teacher.branch = req.body.branch;
+  teacher.course = req.body.course;
+  teacher.phone = req.body.phone;
+  if (req.body.password !== "") {
+    teacher.password = await hashPassword(req.body.password);
+  }
+  await teacher.save();
+  res.status(200).json({ msg: "Successfully updated" });
+};
+
+//update a student
+export const editStudent = async (req, res) => {
+  const student = await User.findById(req.params.id);
+  if (!student) throw new NotFoundError("No Student Found");
+  student.name = req.body.name;
+  student.address = req.body.address;
+  student.age = req.body.age;
+  student.email = req.body.email;
+  student.branch = req.body.branch;
+  student.course = req.body.course;
+  student.phone = req.body.phone;
+  if (req.body.password !== "") {
+    student.password = await hashPassword(req.body.password);
+  }
+  await student.save();
+  res.status(200).json({ msg: "Successfully updated" });
 };

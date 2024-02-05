@@ -7,6 +7,7 @@ import {
 } from "../slices/adminApiSlice";
 import Loading from "../components/Loading";
 import { toast } from "react-toastify";
+import DetailComponent from "../components/DetailComponent";
 
 function VerifySinglePage() {
   const { id } = useParams();
@@ -33,45 +34,20 @@ function VerifySinglePage() {
     <div>
       <h1 className="text-xl md:text-2xl font-semibold">Verify Teacher</h1>
       <div className="mt-3 mb-6 bg-blue-100 p-2 md:p-6 text-sm md:text-base">
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>NAME</p>
-          <p>:</p>
-          <p>{teacher.name}</p>
-        </div>
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>COURSE</p>
-          <p>:</p>
-          <p>
-            {teacher.course.includes("OET")
+        <DetailComponent title={"NAME"} detail={teacher.name} />
+        <DetailComponent
+          title={"COURSE"}
+          detail={
+            teacher.course.includes("OET")
               ? teacher.course.substring(0, 3)
-              : teacher.course.substring(0, 5)}
-          </p>
-        </div>
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>BRANCH</p>
-          <p>:</p>
-          <p>{teacher.branch}</p>
-        </div>
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>EMAIL</p>
-          <p>:</p>
-          <p>{teacher.email}</p>
-        </div>
-        <div className="flex justify-start gap-3 md:gap-12 mb-5">
-          <p>ADDRESS</p>
-          <p>:</p>
-          <p>{teacher.address}</p>
-        </div>
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>PHONE</p>
-          <p>:</p>
-          <p>{teacher.phone}</p>
-        </div>
-        <div className="flex justify-start gap-4 md:gap-12 mb-5">
-          <p>AGE</p>
-          <p>:</p>
-          <p>{teacher.age}</p>
-        </div>
+              : teacher.course.substring(0, 5)
+          }
+        />
+        <DetailComponent title={"BRANCH"} detail={teacher.branch} />
+        <DetailComponent title={"EMAIL"} detail={teacher.email} />
+        <DetailComponent title={"ADDRESS"} detail={teacher.address} />
+        <DetailComponent title={"PHONE"} detail={teacher.phone} />
+        <DetailComponent title={"AGE"} detail={teacher.age} />
       </div>
       <div className="flex gap-2 justify-end text-lg">
         <Link

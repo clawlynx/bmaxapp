@@ -35,13 +35,13 @@ function NavLinks({ isSmall }) {
         })}
       {userInfo?.role === "admin" &&
         adminLinks.map((item) => {
-          const { text, path } = item;
+          const { text, path, urlword } = item;
           return (
             <NavLink
               to={path}
               key={text}
               className={`nav-link flex items-center gap-2 py-4 lg:ps-10 px-0 capitalize hover:text-blue-700 hover:ms-5 ${
-                pathname.includes(text) ? "text-blue-700" : ""
+                pathname.includes(urlword) ? "text-blue-700" : ""
               }`}
               onClick={isSmall && toggle}
               end

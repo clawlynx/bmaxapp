@@ -20,6 +20,9 @@ import VerificationPage from "./pages/VerificationPage";
 import NewAnnouncement from "./pages/NewAnnouncement";
 import EditAnnouncement from "./pages/EditAnnouncement";
 import VerifySinglePage from "./pages/VerifySinglePage";
+import TeacherDetailsAdmin from "./pages/TeacherDetailsAdmin";
+import EditTeacherAdmin from "./pages/EditTeacherAdmin";
+import EditStudentAdmin from "./pages/EditStudentAdmin";
 
 function App() {
   const router = createBrowserRouter([
@@ -57,13 +60,14 @@ function App() {
               element: <NewAnnouncement />,
             },
             {
-              path: "announcements/:id",
-              element: <SingleAnnouncementPage />,
-            },
-            {
               path: "announcements/edit/:id",
               element: <EditAnnouncement />,
             },
+            {
+              path: "announcements/:id",
+              element: <SingleAnnouncementPage />,
+            },
+
             {
               path: "attendance",
               element: <AttendancePage />,
@@ -95,8 +99,20 @@ function App() {
               element: <AllStudentsAdminPage />,
             },
             {
+              path: "all-students/edit/:id",
+              element: <EditStudentAdmin />,
+            },
+            {
               path: "all-teachers",
               element: <AllTeachersAdminPage />,
+            },
+            {
+              path: "all-teachers/edit/:id",
+              element: <EditTeacherAdmin />,
+            },
+            {
+              path: "all-teachers/:id",
+              element: <TeacherDetailsAdmin />,
             },
             {
               path: "verification",

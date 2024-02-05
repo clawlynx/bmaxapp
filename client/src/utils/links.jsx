@@ -22,13 +22,29 @@ export const teacherLinks = [
 ];
 
 export const adminLinks = [
-  { text: "profile", path: ".", icon: <CgProfile /> },
-  { text: "announcements", path: "announcements", icon: <GrAnnounce /> },
-  { text: "all Teachers", path: "all-teachers", icon: <FaChalkboardTeacher /> },
-  { text: "all Students", path: "all-students", icon: <PiStudent /> },
+  { text: "profile", path: ".", icon: <CgProfile />, urlword: "profile" },
+  {
+    text: "announcements",
+    path: "announcements",
+    icon: <GrAnnounce />,
+    urlword: "announcements",
+  },
+  {
+    text: "all Teachers",
+    path: "all-teachers",
+    icon: <FaChalkboardTeacher />,
+    urlword: "all-teachers",
+  },
+  {
+    text: "all Students",
+    path: "all-students",
+    icon: <PiStudent />,
+    urlword: "all-students",
+  },
   {
     text: "verification",
     path: "verification",
     icon: <MdOutlineVerifiedUser />,
+    urlword: "verification",
   },
 ];

@@ -71,3 +71,23 @@ export const validateAnnouncementInput = withValidationErrors([
   body("title").notEmpty().withMessage("Title is required"),
   body("content").notEmpty().withMessage("Content is required"),
 ]);
+
+export const validateUpdateTeacherInput = withValidationErrors([
+  body("name").notEmpty().withMessage("Name is required. "),
+  body("email")
+    .notEmpty()
+    .withMessage("Email is required. ")
+    .isEmail()
+    .withMessage("Invalid email format. ")
+    .custom(async (email, { req }) => {
+      const user = await User.findOne({ email });
+      if (user && user._id.toString() !== req.params.id.toString()) {
+        throw new BadRequestError("Email already exists");
+      }
+    }),
+  body("phone").notEmpty().withMessage("Phone Number is required. "),
+  body("address").notEmpty().withMessage("Address is required. "),
+  body("branch").notEmpty().withMessage("Branch is required. "),
+  body("course").notEmpty().withMessage("Course is required. "),
+  body("age").notEmpty().withMessage("Age is required. "),
+]);

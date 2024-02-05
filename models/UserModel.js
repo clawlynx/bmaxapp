@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import { branches, courses } from "../utils/constants.js";
 
 const attendanceSchema = new Schema({
@@ -36,11 +36,18 @@ const teacherSchema = new Schema({
     default: false,
   },
   currentStudents: {
-    type: [Object],
+    type: [mongoose.Types.ObjectId],
+    ref: "User",
     default: [],
   },
   totalStudents: {
-    type: [Object],
+    type: [mongoose.Types.ObjectId],
+    ref: "User",
+    default: [],
+  },
+  completedStudents: {
+    type: [mongoose.Types.ObjectId],
+    ref: "User",
     default: [],
   },
   verifiedOn: Date,

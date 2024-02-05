@@ -23,6 +23,7 @@ import VerifySinglePage from "./pages/VerifySinglePage";
 import TeacherDetailsAdmin from "./pages/TeacherDetailsAdmin";
 import EditTeacherAdmin from "./pages/EditTeacherAdmin";
 import EditStudentAdmin from "./pages/EditStudentAdmin";
+import StudentDetailsAdmin from "./pages/StudentDetailsAdmin";
 
 function App() {
   const router = createBrowserRouter([
@@ -101,6 +102,10 @@ function App() {
             {
               path: "all-students/edit/:id",
               element: <EditStudentAdmin />,
+            },
+            {
+              path: "all-students/:id",
+              element: <StudentDetailsAdmin />,
             },
             {
               path: "all-teachers",

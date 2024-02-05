@@ -8,9 +8,11 @@ import cookieParser from "cookie-parser";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 import authRouter from "./routes/authRouter.js";
 import adminRouter from "./routes/adminRouter.js";
+import teacherRouter from "./routes/teacherRouter.js";
 import {
   authenticateUser,
   checkForAdmin,
+  checkForTeacher,
 } from "./middleware/authMiddleware.js";
 
 const app = express();
@@ -28,6 +30,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/admin", authenticateUser, checkForAdmin, adminRouter);
+app.use("/api/v1/tutor", authenticateUser, checkForTeacher, teacherRouter);
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });

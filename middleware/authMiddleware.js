@@ -25,3 +25,11 @@ export const checkForAdmin = async (req, res, next) => {
     throw new UnauthorizedError("Not Authorized. Admins Only");
   }
 };
+
+export const checkForTeacher = async (req, res, next) => {
+  if (req.user && req.user.role === "teacher") {
+    next();
+  } else {
+    throw new UnauthorizedError("Not Authorised. Teachers Only");
+  }
+};

@@ -21,7 +21,12 @@ export const RegisterUser = async (req, res) => {
   const isFirst = (await User.countDocuments()) === 0;
   const newRole = isFirst ? "admin" : isTeacher ? "teacher" : "student";
   const teacher = isTeacher
-    ? { hasVerified: false, currentStudents: [], totalStudents: [] }
+    ? {
+        hasVerified: false,
+        currentStudents: [],
+        totalStudents: [],
+        completedStudents: [],
+      }
     : null;
   const hashedPassword = await hashPassword(password);
   const newUser = new User({

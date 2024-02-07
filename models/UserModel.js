@@ -89,7 +89,7 @@ const userSchema = new Schema(
     password: String,
     studentDetails: {
       type: studentSchema,
-      default: { active: false, teacher: "", attendance: [], performance: [] },
+      default: { active: false, attendance: [], performance: [] },
     },
     teacherDetails: {
       type: teacherSchema,

@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import MarkingElement from "../components/MarkingElement";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEvaluateStudentMutation } from "../slices/teacherApiSlice";
+import Loading from "../components/Loading";
+import { toast } from "react-toastify";
 
 function MarkingPage() {
+  const { id } = useParams();
   const [date, setDate] = useState("");
   const [lattendance, setLattendance] = useState(false);
   const [rattendance, setRattendance] = useState(false);
@@ -13,19 +17,29 @@ function MarkingPage() {
   const [wscore, setWScore] = useState(0);
   const [sscore, setSScore] = useState(0);
 
+  const [evaluateStudent, { isLoading }] = useEvaluateStudentMutation();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      lattendance,
-      rattendance,
-      wattendance,
-      sattendance,
-      lscore,
-      rscore,
-      wscore,
-      sscore,
-      date,
-    });
+    try {
+      const res = await evaluateStudent({
+        id,
+        date,
+        lattendance,
+        rattendance,
+        wattendance,
+        sattendance,
+        lscore,
+        rscore,
+        wscore,
+        sscore,
+      }).unwrap();
+      toast.success("Successfully evaluated");
+      navigate("/dashboard/evaluate");
+    } catch (error) {
+      toast.error(err?.data?.msg || err?.error);
+    }
   };
   return (
     <div>
@@ -77,7 +91,7 @@ function MarkingPage() {
           onchange2={(e) => setSScore(e.target.value)}
         />
 
-        <div className="flex gap-2 justify-end text-lg">
+        <div className="flex gap-2 justify-end text-lg mt-4">
           <Link
             to={"/dashboard/evaluate"}
             className=" bg-gray-700 text-white px-2 py-1 rounded-sm hover:bg-gray-500"
@@ -88,9 +102,11 @@ function MarkingPage() {
             type="submit"
             className="bg-blue-800 text-white px-2 py-1 rounded-sm hover:bg-blue-500"
             onClick={handleSubmit}
+            disabled={isLoading}
           >
             Save
           </button>
+          {isLoading && <Loading />}
         </div>
       </form>
     </div>

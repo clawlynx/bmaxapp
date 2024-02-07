@@ -7,12 +7,12 @@ function CompletedStudents() {
     <div>
       <h1 className="text-xl md:text-2xl font-semibold">Completed Students</h1>
       <div className=" mt-7 mb-5">
-        {userInfo?.teacherDetails?.currentStudents.length < 1 && (
+        {userInfo?.teacherDetails?.completedStudents.length < 1 && (
           <h1 className="bg-red-800 text-white px-2 py-2">
             You Dont have any completed Students
           </h1>
         )}
-        {userInfo?.teacherDetails?.currentStudents.length > 0 && (
+        {userInfo?.teacherDetails?.completedStudents.length > 0 && (
           <table className="bg-blue-200 w-full text-center">
             <thead>
               <tr className="border-b-2 border-b-blue-300">

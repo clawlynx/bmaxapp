@@ -91,3 +91,47 @@ export const validateUpdateTeacherInput = withValidationErrors([
   body("course").notEmpty().withMessage("Course is required. "),
   body("age").notEmpty().withMessage("Age is required. "),
 ]);
+
+export const validateEvaluateInput = withValidationErrors([
+  body("date").notEmpty().withMessage("Date is required"),
+  body("lattendance")
+    .notEmpty()
+    .withMessage("Listening attendance is required")
+    .isBoolean()
+    .withMessage("Invalid attendance format"),
+  body("rattendance")
+    .notEmpty()
+    .withMessage("Reading attendance is required")
+    .isBoolean()
+    .withMessage("Invalid attendance format"),
+  body("wattendance")
+    .notEmpty()
+    .withMessage("Writing attendance is required")
+    .isBoolean()
+    .withMessage("Invalid attendance format"),
+  body("sattendance")
+    .notEmpty()
+    .withMessage("Speaking attendance is required")
+    .isBoolean()
+    .withMessage("Invalid attendance format"),
+  body("lscore")
+    .notEmpty()
+    .withMessage("Listening score is required")
+    .isNumeric()
+    .withMessage("Invalid score format"),
+  body("rscore")
+    .notEmpty()
+    .withMessage("Reading score is required")
+    .isNumeric()
+    .withMessage("Invalid score format"),
+  body("wscore")
+    .notEmpty()
+    .withMessage("Writing score is required")
+    .isNumeric()
+    .withMessage("Invalid score format"),
+  body("sscore")
+    .notEmpty()
+    .withMessage("Speaking score is required")
+    .isNumeric()
+    .withMessage("Invalid score format"),
+]);

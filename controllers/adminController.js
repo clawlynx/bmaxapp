@@ -85,7 +85,9 @@ export const deleteStudent = async (req, res) => {
 
 //get a single teacher
 export const getSingleTeacher = async (req, res) => {
-  const teacher = await User.findById(req.params.id);
+  const teacher = await User.findById(req.params.id).populate(
+    "teacherDetails.currentStudents"
+  );
   if (!teacher) throw new NotFoundError("No teacher found");
   res.status(200).json(teacher);
 };
@@ -112,6 +114,12 @@ export const verifyTeacher = async (req, res) => {
 export const editTeacher = async (req, res) => {
   const teacher = await User.findById(req.params.id);
   if (!teacher) throw new NotFoundError("No Teacher Found");
+  if (teacher.name !== req.body.name) {
+    await User.updateMany(
+      { "studentDetails.teacher": teacher.name },
+      { "studentDetails.teacher": req.body.name }
+    );
+  }
   teacher.name = req.body.name;
   teacher.address = req.body.address;
   teacher.age = req.body.age;

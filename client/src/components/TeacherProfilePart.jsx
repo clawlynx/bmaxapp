@@ -28,11 +28,11 @@ function TeacherProfilePart() {
         </p>
       </div>
       <div className="flex justify-start gap-4 md:gap-12 mb-5">
-        <p>TOTAL STUDENTS</p>
+        <p>COMPLETED STUDENTS</p>
         <p>:</p>
         <p>
           {userInfo?.teacherDetails?.hasVerified ? (
-            <span>{userInfo.teacherDetails.totalStudents.length}</span>
+            <span>{userInfo.teacherDetails.completedStudents.length}</span>
           ) : (
             <span className=" ">N/A</span>
           )}

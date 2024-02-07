@@ -24,12 +24,15 @@ function AttendancePage() {
         <div className="flex gap-4 md:gap-12 mb-5 font-semibold">
           <p>Start Date</p>
           <p>:</p>
-          <p>{userInfo?.studentDetails?.joinedOn || "Not Started"}</p>
+          <p>
+            {userInfo?.studentDetails?.joinedOn?.substring(0, 10) ||
+              "Not Started"}
+          </p>
         </div>
         <div className="flex gap-4 md:gap-12 mb-5 font-semibold">
           <p>End Date</p>
           <p>:</p>
-          <p>{userInfo?.studentDetails?.endedOn || "Not Started"}</p>
+          <p>{userInfo?.studentDetails?.endedOn || "N/A"}</p>
         </div>
       </div>
       <div className=" mt-7">

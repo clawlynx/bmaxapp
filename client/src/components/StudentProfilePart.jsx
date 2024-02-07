@@ -16,7 +16,7 @@ function StudentProfilePart() {
         <p>
           {!userInfo?.studentDetails?.active
             ? "NOT STARTED"
-            : userInfo.studentDetails.joinedOn}
+            : userInfo.studentDetails.joinedOn.substring(0, 10)}
         </p>
       </div>
       <div className="flex justify-start gap-4 md:gap-12 mb-5">
@@ -27,16 +27,6 @@ function StudentProfilePart() {
             ? "NOT STARTED"
             : userInfo.studentDetails.endedOn}
         </p>
-      </div>
-      <div className="flex justify-start gap-4 md:gap-12 mb-5">
-        <p>TOTAL PRESENT</p>
-        <p>:</p>
-        <p>{}</p>
-      </div>
-      <div className="flex justify-start gap-4 md:gap-12 mb-5">
-        <p>TOTAL ABSENT</p>
-        <p>:</p>
-        <p>{}</p>
       </div>
       <div className="flex justify-start gap-4 md:gap-12 mb-5">
         <p>AVG. PERFORMANCE</p>

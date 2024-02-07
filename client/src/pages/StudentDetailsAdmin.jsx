@@ -24,6 +24,18 @@ function StudentDetailsAdmin() {
         <DetailComponent title={"ADDRESS"} detail={student.address} />
         <DetailComponent title={"PHONE"} detail={student.phone} />
         <DetailComponent title={"AGE"} detail={student.age} />
+        <DetailComponent
+          title={"TUTOR"}
+          detail={student.studentDetails?.teacher || ""}
+        />
+        <DetailComponent
+          title={"CLASS STARTED"}
+          detail={student.studentDetails?.joinedOn?.substring(0, 10) || "N/A"}
+        />
+        <DetailComponent
+          title={"CLASS ENDED"}
+          detail={student.studentDetails?.endedOn?.substring(0, 10) || "N/A"}
+        />
       </div>
       <div className="flex gap-2 justify-end text-lg">
         <Link

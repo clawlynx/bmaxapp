@@ -1,16 +1,40 @@
 import React, { useState } from "react";
-import { useGetUnassignedQuery } from "../slices/teacherApiSlice";
+import {
+  useAddStudentMutation,
+  useGetCurrentStudentsQuery,
+  useGetUnassignedQuery,
+} from "../slices/teacherApiSlice";
 import Loading from "./Loading";
 import Modal from "./Modal";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUser } from "../slices/userSlice";
 
 function UnassignedStudents() {
-  const { data: unassigned, isLoading } = useGetUnassignedQuery();
+  const { data: unassigned, refetch, isLoading } = useGetUnassignedQuery();
   const [assign, setAssign] = useState(false);
   const [assignId, setAssignId] = useState("");
+  const [addStudent, { isLoading: assignLoading }] = useAddStudentMutation();
+  const { refetch: refetch2 } = useGetCurrentStudentsQuery();
+  const dispatch = useDispatch();
 
   function cancelFunction() {
     setAssign(false);
     setAssignId("");
+  }
+
+  async function confirmFunction() {
+    try {
+      const res = await addStudent(assignId).unwrap();
+      setAssign(false);
+      setAssignId("");
+      refetch();
+      refetch2();
+      dispatch(setUser(res.teacher));
+      toast.success("Student added");
+    } catch (error) {
+      toast.error(error?.data?.msg);
+    }
   }
   return isLoading ? (
     <Loading />
@@ -20,6 +44,7 @@ function UnassignedStudents() {
         <Modal
           title={"Are you sure want to add the student?"}
           function1={cancelFunction}
+          function2={confirmFunction}
         />
       )}
       <h1 className="text-xl md:text-2xl font-semibold">Unassigned Students</h1>

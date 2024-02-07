@@ -89,6 +89,12 @@ export const getUser = async (req, res) => {
 export const updateProfile = async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) throw new NotFoundError("no user found");
+  if (user.name !== req.body.name) {
+    await User.updateMany(
+      { "studentDetails.teacher": user.name },
+      { "studentDetails.teacher": req.body.name }
+    );
+  }
   user.name = req.body.name;
   user.email = req.body.email;
   user.address = req.body.address;

@@ -1,9 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useGetUserInfoQuery } from "../slices/userApiSlice";
+import Loading from "./Loading";
 
 function PerformanceList() {
-  const { userInfo } = useSelector((state) => state.user);
-  return (
+  const { data: userInfo, isLoading } = useGetUserInfoQuery();
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className=" mt-7">
       {userInfo?.studentDetails?.performance?.length < 1 && (
         <h1 className="bg-red-800 text-white px-2 py-2">
@@ -23,13 +27,15 @@ function PerformanceList() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className=" tablecolumn">p</td>
-              <td className=" tablecolumn">p</td>
-              <td className=" tablecolumn">p</td>
-              <td className=" tablecolumn">p</td>
-              <td className=" tablecolumn">p</td>
-            </tr>
+            {userInfo.studentDetails.performance.map((x) => (
+              <tr key={x._id}>
+                <td className=" tablecolumn">{x.date.substring(0, 10)}</td>
+                <td className=" tablecolumn">{x.listeningScore}</td>
+                <td className=" tablecolumn">{x.readingScore}</td>
+                <td className=" tablecolumn">{x.writingScore}</td>
+                <td className=" tablecolumn">{x.speakingScore}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       )}

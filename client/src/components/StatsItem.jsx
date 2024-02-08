@@ -8,8 +8,12 @@ function StatsItem({ icon, heading, highscore, currentscore }) {
         <p className="text-xl md:text-3xl mt-3">{heading}</p>
       </div>
       <div className=" leading-loose text-sm md:text-xl">
-        <p>Top Score : {highscore}</p>
-        <p>Current Score :{currentscore}</p>
+        <p>
+          Top Score : <span className=" font-semibold">{highscore}</span>
+        </p>
+        <p>
+          Current Score : <span className=" font-semibold">{currentscore}</span>
+        </p>
       </div>
     </div>
   );

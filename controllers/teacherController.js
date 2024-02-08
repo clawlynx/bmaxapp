@@ -59,7 +59,7 @@ export const evaluateStudent = async (req, res) => {
     attendedSpeaking: req.body.sattendance,
   };
   const performanceObject = {
-    date: new Date(req.body.date),
+    date: new Date(req.body.date).toISOString(),
     listeningScore: req.body.lscore,
     readingScore: req.body.rscore,
     writingScore: req.body.wscore,

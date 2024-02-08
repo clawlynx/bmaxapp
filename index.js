@@ -9,6 +9,7 @@ import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 import authRouter from "./routes/authRouter.js";
 import adminRouter from "./routes/adminRouter.js";
 import teacherRouter from "./routes/teacherRouter.js";
+import studentRouter from "./routes/studentRouter.js";
 import {
   authenticateUser,
   checkForAdmin,
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/admin", authenticateUser, checkForAdmin, adminRouter);
 app.use("/api/v1/tutor", authenticateUser, checkForTeacher, teacherRouter);
+app.use("/api/v1/student", authenticateUser, studentRouter);
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });

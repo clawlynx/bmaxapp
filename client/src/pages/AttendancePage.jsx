@@ -1,11 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useGetUserInfoQuery } from "../slices/userApiSlice";
+import Loading from "../components/Loading";
 
 function AttendancePage() {
-  const { userInfo } = useSelector((state) => state.user);
-  return (
+  const { data: userInfo, isLoading } = useGetUserInfoQuery();
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div>
-      <div className=" grid grid-cols-1 justify-start md:grid-cols-2">
+      <div className=" grid grid-cols-1 justify-center md:justify-start md:grid-cols-2 text-xs md:text-base">
         <div className="flex gap-4 md:gap-12 mb-5 font-semibold">
           <p>Course</p>
           <p>:</p>
@@ -54,13 +58,39 @@ function AttendancePage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className=" tablecolumn">p</td>
-                <td className=" tablecolumn">p</td>
-                <td className=" tablecolumn">p</td>
-                <td className=" tablecolumn">p</td>
-                <td className=" tablecolumn">p</td>
-              </tr>
+              {userInfo?.studentDetails?.attendance.map((x) => (
+                <tr key={x._id}>
+                  <td className=" tablecolumn">{x.date.substring(0, 10)}</td>
+                  <td className="tablecolumn flex">
+                    {x.attendedListening ? (
+                      <span className="text-green-700">P</span>
+                    ) : (
+                      <span className="text-red-700">A</span>
+                    )}
+                  </td>
+                  <td className=" tablecolumn">
+                    {x.attendedReading ? (
+                      <span className="text-green-700">P</span>
+                    ) : (
+                      <span className="text-red-700">A</span>
+                    )}
+                  </td>
+                  <td className=" tablecolumn">
+                    {x.attendedWriting ? (
+                      <span className="text-green-700">P</span>
+                    ) : (
+                      <span className="text-red-700">A</span>
+                    )}
+                  </td>
+                  <td className=" tablecolumn">
+                    {x.attendedSpeaking ? (
+                      <span className="text-green-700">P</span>
+                    ) : (
+                      <span className="text-red-700">A</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}
@@ -70,3 +100,4 @@ function AttendancePage() {
 }
 
 export default AttendancePage;
+/** */

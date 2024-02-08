@@ -5,18 +5,68 @@ import { FaPenNib } from "react-icons/fa6";
 import { RiSpeakFill } from "react-icons/ri";
 import { FaPenRuler } from "react-icons/fa6";
 import StatsItem from "../components/StatsItem";
-import { useSelector } from "react-redux";
+
+import Loading from "./Loading";
+import { useGetScoreStatsQuery } from "../slices/studentApiSlice";
 
 function StatsContainer() {
-  const { userInfo } = useSelector((state) => state.user);
-  return (
+  const { data: scoreStats, isLoading } = useGetScoreStatsQuery();
+
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-      <StatsItem icon={<FaHeadphones />} heading={"LISTENING"} />
-      <StatsItem icon={<FaBookOpenReader />} heading={"READING"} />
-      <StatsItem icon={<FaPenNib />} heading={"WRITING"} />
-      <StatsItem icon={<RiSpeakFill />} heading={"SPEAKING"} />
-      {userInfo?.course.includes("IELTS") && (
-        <StatsItem icon={<FaPenRuler />} heading={"OVERALL"} />
+      <StatsItem
+        icon={<FaHeadphones />}
+        heading={"LISTENING"}
+        currentscore={
+          scoreStats.performanceArray.length > 1 &&
+          scoreStats.performanceArray[scoreStats.performanceArray.length - 1]
+            .listeningScore
+        }
+        highscore={scoreStats.highestlscore}
+      />
+      <StatsItem
+        icon={<FaBookOpenReader />}
+        heading={"READING"}
+        currentscore={
+          scoreStats.performanceArray.length > 1 &&
+          scoreStats.performanceArray[scoreStats.performanceArray.length - 1]
+            .readingScore
+        }
+        highscore={scoreStats.highestrscore}
+      />
+      <StatsItem
+        icon={<FaPenNib />}
+        heading={"WRITING"}
+        currentscore={
+          scoreStats.performanceArray.length > 1 &&
+          scoreStats.performanceArray[scoreStats.performanceArray.length - 1]
+            .writingScore
+        }
+        highscore={scoreStats.highestwscore}
+      />
+      <StatsItem
+        icon={<RiSpeakFill />}
+        heading={"SPEAKING"}
+        currentscore={
+          scoreStats.performanceArray.length > 1 &&
+          scoreStats.performanceArray[scoreStats.performanceArray.length - 1]
+            .speakingScore
+        }
+        highscore={scoreStats.highestsscore}
+      />
+      {scoreStats?.course?.includes("IELTS") && (
+        <StatsItem
+          icon={<FaPenRuler />}
+          heading={"OVERALL"}
+          currentscore={
+            scoreStats.performanceArray.length > 1 &&
+            scoreStats.performanceArray[scoreStats.performanceArray.length - 1]
+              .overallScore
+          }
+          highscore={scoreStats.highestoscore}
+        />
       )}
     </div>
   );

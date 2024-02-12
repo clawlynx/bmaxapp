@@ -91,6 +91,12 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getStudentScoreStats: builder.query({
+      query: (studentId) => ({
+        url: `${ADMIN_URL}/studentstats/${studentId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -109,4 +115,5 @@ export const {
   useUpdateTeacherMutation,
   useGetSingleStudentQuery,
   useUpdateStudentMutation,
+  useGetStudentScoreStatsQuery,
 } = adminApiSlice;

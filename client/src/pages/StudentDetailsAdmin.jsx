@@ -1,6 +1,9 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetSingleStudentQuery } from "../slices/adminApiSlice";
+import {
+  useGetSingleStudentQuery,
+  useGetStudentScoreStatsQuery,
+} from "../slices/adminApiSlice";
 import Loading from "../components/Loading";
 import DetailComponent from "../components/DetailComponent";
 import StatsItem from "../components/StatsItem";
@@ -11,29 +14,10 @@ import { RiSpeakFill } from "react-icons/ri";
 function StudentDetailsAdmin() {
   const { id } = useParams();
   const { data: student, isLoading } = useGetSingleStudentQuery(id);
-  const performanceArray = student?.studentDetails?.performance;
-  let highestlscore = 0;
-  let highestrscore = 0;
-  let highestwscore = 0;
-  let highestsscore = 0;
-  let highestoscore = 0;
-  performanceArray?.forEach((element) => {
-    if (element.listeningScore > highestlscore) {
-      highestlscore = element.listeningScore;
-    }
-    if (element.readingScore > highestrscore) {
-      highestrscore = element.readingScore;
-    }
-    if (element.writingScore > highestwscore) {
-      highestwscore = element.writingScore;
-    }
-    if (element.speakingScore > highestsscore) {
-      highestsscore = element.speakingScore;
-    }
-    if (element.overallScore && element.overallScore > highestoscore) {
-      highestoscore = element.overallScore;
-    }
-  });
+  const { data: scoreStats, isLoading: loadingStats } =
+    useGetStudentScoreStatsQuery(id);
+  console.log(scoreStats);
+
   return isLoading ? (
     <Loading />
   ) : (
@@ -68,55 +52,69 @@ function StudentDetailsAdmin() {
           Back
         </Link>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-3">
-        <StatsItem
-          icon={<FaHeadphones />}
-          heading={"LISTENING"}
-          currentscore={
-            performanceArray.length > 1 &&
-            performanceArray[performanceArray.length - 1].listeningScore
-          }
-          highscore={highestlscore}
-        />
-        <StatsItem
-          icon={<FaBookOpenReader />}
-          heading={"READING"}
-          currentscore={
-            performanceArray.length > 1 &&
-            performanceArray[performanceArray.length - 1].readingScore
-          }
-          highscore={highestrscore}
-        />
-        <StatsItem
-          icon={<FaPenNib />}
-          heading={"WRITING"}
-          currentscore={
-            performanceArray.length > 1 &&
-            performanceArray[performanceArray.length - 1].writingScore
-          }
-          highscore={highestwscore}
-        />
-        <StatsItem
-          icon={<RiSpeakFill />}
-          heading={"SPEAKING"}
-          currentscore={
-            performanceArray.length > 1 &&
-            performanceArray[performanceArray.length - 1].speakingScore
-          }
-          highscore={highestsscore}
-        />
-        {student?.course.includes("IELTS") && (
+      {loadingStats ? (
+        <Loading />
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-3">
           <StatsItem
-            icon={<FaPenRuler />}
-            heading={"OVERALL"}
+            icon={<FaHeadphones />}
+            heading={"LISTENING"}
             currentscore={
-              performanceArray.length > 1 &&
-              performanceArray[performanceArray.length - 1].overallScore
+              scoreStats.performanceArray.length > 1 &&
+              scoreStats.performanceArray[
+                scoreStats.performanceArray.length - 1
+              ].listeningScore
             }
-            highscore={highestoscore}
+            highscore={scoreStats.highestlscore}
           />
-        )}
-      </div>
+          <StatsItem
+            icon={<FaBookOpenReader />}
+            heading={"READING"}
+            currentscore={
+              scoreStats.performanceArray.length > 1 &&
+              scoreStats.performanceArray[
+                scoreStats.performanceArray.length - 1
+              ].readingScore
+            }
+            highscore={scoreStats.highestrscore}
+          />
+          <StatsItem
+            icon={<FaPenNib />}
+            heading={"WRITING"}
+            currentscore={
+              scoreStats.performanceArray.length > 1 &&
+              scoreStats.performanceArray[
+                scoreStats.performanceArray.length - 1
+              ].writingScore
+            }
+            highscore={scoreStats.highestwscore}
+          />
+          <StatsItem
+            icon={<RiSpeakFill />}
+            heading={"SPEAKING"}
+            currentscore={
+              scoreStats.performanceArray.length > 1 &&
+              scoreStats.performanceArray[
+                scoreStats.performanceArray.length - 1
+              ].speakingScore
+            }
+            highscore={scoreStats.highestsscore}
+          />
+          {student?.course.includes("IELTS") && (
+            <StatsItem
+              icon={<FaPenRuler />}
+              heading={"OVERALL"}
+              currentscore={
+                scoreStats.performanceArray.length > 1 &&
+                scoreStats.performanceArray[
+                  scoreStats.performanceArray.length - 1
+                ].overallScore
+              }
+              highscore={scoreStats.highestoscore}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

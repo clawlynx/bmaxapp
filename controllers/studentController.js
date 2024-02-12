@@ -1,6 +1,7 @@
 import { NotFoundError } from "../errors/customErrors.js";
 import User from "../models/UserModel.js";
 
+//get the stats of individual score fore stats container
 export const getScoreStats = async (req, res) => {
   const student = await User.findById(req.user._id);
   if (!student) throw new NotFoundError("Student not found");
@@ -37,4 +38,64 @@ export const getScoreStats = async (req, res) => {
     highestwscore,
     highestsscore,
   });
+};
+
+//get stats for performance graph
+export const getGraphStats = async (req, res) => {
+  const student = await User.findById(req.user._id);
+  if (!student) throw new NotFoundError("No student found");
+  const performanceArray = student.studentDetails.performance;
+  if (performanceArray.length > 0) {
+    const listeningData = performanceArray.map((x) => {
+      return {
+        date: x.date.toLocaleDateString(),
+        score: x.listeningScore,
+      };
+    });
+    const readingData = performanceArray.map((x) => {
+      return {
+        date: x.date.toLocaleDateString(),
+        score: x.readingScore,
+      };
+    });
+    const writingData = performanceArray.map((x) => {
+      return {
+        date: x.date.toLocaleDateString(),
+        score: x.writingScore,
+      };
+    });
+    const speakingData = performanceArray.map((x) => {
+      return {
+        date: x.date.toLocaleDateString(),
+        score: x.speakingScore,
+      };
+    });
+    const overallData = performanceArray.map((x) => {
+      if (x.overallScore) {
+        return {
+          date: x.date.toLocaleDateString(),
+          score: x.overallScore,
+        };
+      } else {
+        return [];
+      }
+    });
+    res.status(200).json({
+      performanceArray,
+      listeningData,
+      readingData,
+      writingData,
+      speakingData,
+      overallData,
+    });
+  } else {
+    res.json({
+      performanceArray,
+      listeningData: [],
+      readingData: [],
+      writingData: [],
+      speakingData: [],
+      overallData: [],
+    });
+  }
 };

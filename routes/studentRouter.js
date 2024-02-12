@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { getScoreStats } from "../controllers/studentController.js";
+import {
+  getGraphStats,
+  getScoreStats,
+} from "../controllers/studentController.js";
 
 const router = Router();
 
 router.get("/scorestats", getScoreStats);
+router.get("/graphstats", getGraphStats);
 
 export default router;

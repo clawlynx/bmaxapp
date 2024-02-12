@@ -7,7 +7,7 @@ import { toggleSidebar } from "../slices/userSlice";
 function Navbar() {
   const dispatch = useDispatch();
   return (
-    <div className=" h-24 flex items-center justify-center shadow-md bg-sky-100 lg:sticky lg:top-0">
+    <div className=" h-24 flex items-center justify-center shadow-md bg-sky-100 lg:sticky lg:top-0 z-30">
       <nav className="vw90 flex items-center justify-between lg:w-11/12">
         <button
           type="button"

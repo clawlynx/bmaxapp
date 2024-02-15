@@ -12,15 +12,33 @@ export const totalCount = async (req, res) => {
 
 //get list of all teachers
 export const allTeachers = async (req, res) => {
-  const teachers = await User.find({ role: "teacher" });
-  const totalTeachers = await User.countDocuments({ role: "teacher" });
+  const { name, branch, course, role } = req.query;
+  const queryObject = {
+    role,
+  };
+  if (name && name !== "") {
+    queryObject.name = { $regex: name, $options: "i" };
+  }
+  if (branch && branch !== "ALL") {
+    queryObject.branch = branch;
+  }
+  if (course && course !== "ALL") {
+    queryObject.course = { $regex: course, $options: "i" };
+  }
+  const page = Number(req.query.currentPage) || 1;
+  const limit = 2;
+  const skip = (page - 1) * limit;
+  const teachers = await User.find(queryObject).skip(skip).limit(limit);
+
+  const totalTeachers = await User.countDocuments(queryObject);
   if (!teachers) throw new NotFoundError("No Teachers Found");
-  res.status(200).json({ totalTeachers, teachers });
+  const numOfPages = Math.ceil(totalTeachers / limit);
+  res.status(200).json({ totalTeachers, teachers, page, numOfPages });
 };
 
 //get list of all students
 export const allStudents = async (req, res) => {
-  const students = await User.find({ role: "student" });
+  const students = (await User.find({ role: "student" })).reverse();
   const totalStudents = await User.countDocuments({ role: "student" });
   if (!students) throw new NotFoundError("No Students found");
   res.status(200).json({ totalStudents, students });

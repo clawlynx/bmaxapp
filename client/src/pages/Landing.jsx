@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import main from "../assets/images/main.svg";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useGetUserInfoQuery } from "../slices/userApiSlice";
 
 function Landing() {
   return (

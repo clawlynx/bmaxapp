@@ -46,4 +46,5 @@ router.patch("/verify/:id", verifyTeacher);
 router.patch("/updateteacher/:id", validateUpdateTeacherInput, editTeacher);
 router.patch("/updatestudent/:id", validateUpdateTeacherInput, editStudent);
 router.get("/studentstats/:id", getIndividualStats);
+
 export default router;

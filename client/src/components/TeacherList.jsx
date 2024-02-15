@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useDeleteTeacherMutation,
   useGetAllTeachersQuery,
@@ -7,9 +7,21 @@ import Loading from "./Loading";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import { toast } from "react-toastify";
+import Pagination from "./Pagination";
+import { useDispatch, useSelector } from "react-redux";
+import { setTotalPages } from "../slices/searchSlice";
 
 function TeacherList() {
-  const { data: allTeachers, refetch, isLoading } = useGetAllTeachersQuery();
+  const { totalPage, currentPage, name, branch, course, searchOn } =
+    useSelector((state) => state.search);
+  const role = "teacher";
+  const {
+    data: allTeachers,
+    refetch,
+    isLoading,
+  } = useGetAllTeachersQuery({ currentPage, role, name, branch, course });
+
+  const dispatch = useDispatch();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [deleteTeacher, { isLoading: loadingDelete }] =
@@ -30,6 +42,9 @@ function TeacherList() {
       toast.error(error?.data?.msg);
     }
   }
+  useEffect(() => {
+    dispatch(setTotalPages(allTeachers?.numOfPages));
+  }, [allTeachers, searchOn]);
 
   return isLoading ? (
     <Loading />
@@ -41,6 +56,11 @@ function TeacherList() {
           function1={cancelFunction}
           function2={confirmFunction}
         />
+      )}
+      {searchOn && (
+        <h4 className="form-title mb-8 text-2xl font-semibold">
+          Search Results
+        </h4>
       )}
       <h4 className="form-title mb-8 text-2xl font-semibold">
         {allTeachers.totalTeachers}
@@ -94,6 +114,15 @@ function TeacherList() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+      {totalPage > 1 && (
+        <div className=" flex justify-end mt-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPage={totalPage}
+            refetch={refetch}
+          />
         </div>
       )}
     </section>

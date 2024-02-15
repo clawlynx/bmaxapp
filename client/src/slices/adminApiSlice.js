@@ -10,8 +10,9 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     getAllTeachers: builder.query({
-      query: () => ({
+      query: ({ currentPage, role, name, branch, course }) => ({
         url: `${ADMIN_URL}/allteachers`,
+        params: { currentPage, role, name, branch, course },
       }),
       keepUnusedDataFor: 5,
     }),

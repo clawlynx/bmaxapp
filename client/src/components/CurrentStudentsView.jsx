@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useGetCurrentStudentsQuery } from "../slices/teacherApiSlice";
 import Loading from "./Loading";
+import Modal from "./Modal";
 
 function CurrentStudentsView() {
+  const [action, setAction] = useState(false);
+  const [completeId, setCompleteId] = useState("");
   const { data: students, isLoading } = useGetCurrentStudentsQuery();
+
+  function cancelFunction() {
+    setAction(false);
+    setCompleteId("");
+  }
   return isLoading ? (
     <Loading />
   ) : (
     <div>
+      {action && (
+        <Modal
+          title={"Are you sure want to end the class of the student?"}
+          function1={cancelFunction}
+        />
+      )}
       <h1 className="text-xl md:text-2xl font-semibold">Current Students</h1>
       <div className=" mt-7 mb-5">
         {students.length < 1 && (
@@ -41,7 +55,13 @@ function CurrentStudentsView() {
                       : x.course.substring(6)}
                   </td>
                   <td className=" tablecolumn flex flex-col gap-1 justify-center items-center md:flex-row">
-                    <button className="bg-gray-700 text-white px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-gray-500 text-xs md:text-md cursor-pointer">
+                    <button
+                      className="bg-gray-700 text-white px-1 py-1 w-full md:w-fit mx-1 md:px-2 md:py-2 rounded hover:bg-gray-500 text-xs md:text-md cursor-pointer"
+                      onClick={() => {
+                        setAction(true);
+                        setCompleteId(x._id);
+                      }}
+                    >
                       END CLASS
                     </button>
                   </td>

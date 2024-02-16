@@ -45,9 +45,9 @@ function TeacherDetailsAdmin() {
         >
           Back
         </Link>
-        <button className="bg-blue-800 text-white px-2 py-1 rounded-sm hover:bg-blue-500">
+        {/*<button className="bg-blue-800 text-white px-2 py-1 rounded-sm hover:bg-blue-500">
           Make Admin
-        </button>
+        </button>*/}
       </div>
       <h1 className="text-xl md:text-2xl font-semibold">Current Students</h1>
       <div className=" mt-7 mb-5">

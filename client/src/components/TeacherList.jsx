@@ -7,13 +7,14 @@ import Loading from "./Loading";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import { toast } from "react-toastify";
-import Pagination from "./Pagination";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalPages } from "../slices/searchSlice";
 
 function TeacherList() {
-  const { totalPage, currentPage, name, branch, course, searchOn } =
-    useSelector((state) => state.search);
+  const { currentPage, name, branch, course, searchOn } = useSelector(
+    (state) => state.search
+  );
   const role = "teacher";
   const {
     data: allTeachers,
@@ -114,15 +115,6 @@ function TeacherList() {
               ))}
             </tbody>
           </table>
-        </div>
-      )}
-      {totalPage > 1 && (
-        <div className=" flex justify-end mt-4">
-          <Pagination
-            currentPage={currentPage}
-            totalPage={totalPage}
-            refetch={refetch}
-          />
         </div>
       )}
     </section>

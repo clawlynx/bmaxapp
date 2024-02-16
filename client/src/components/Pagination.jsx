@@ -18,20 +18,20 @@ function Pagination({ currentPage, totalPage, refetch }) {
   };
 
   return (
-    <div className="flex items-center gap-8">
+    <div className="flex items-center gap-3 md:gap-8">
       <button
-        className=" text-xl bg-blue-700 text-white p-2 rounded hover:bg-blue-500"
+        className="text-xs md:text-xl bg-blue-700 text-white p-2 rounded hover:bg-blue-500"
         onClick={prev}
         disabled={currentPage === 1}
       >
         <GoArrowLeft />
       </button>
-      <p className=" text-lg">
+      <p className="text-xs md:text-lg">
         Page <span className=" font-semibold">{currentPage}</span> of{" "}
         <span className="font-semibold">{totalPage}</span>
       </p>
       <button
-        className=" text-xl bg-blue-700 text-white p-2 rounded hover:bg-blue-500"
+        className="text-xs md:text-xl bg-blue-700 text-white p-2 rounded hover:bg-blue-500"
         onClick={next}
         disabled={currentPage === totalPage}
       >

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormElement from "./FormElement";
 import FormSelectElement from "./FormSelectElement";
 import { branches } from "../../../utils/constants";
-import { useLocation } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setBranch,
   setCourse,
@@ -14,20 +13,8 @@ import {
   setSearchOn,
   setTotalPages,
 } from "../slices/searchSlice";
-import { useGetAllTeachersQuery } from "../slices/adminApiSlice";
 
-function SearchAllTeachers() {
-  const data = useLocation();
-  const { name, branch, course, currentPage } = useSelector(
-    (state) => state.search
-  );
-  const { refetch } = useGetAllTeachersQuery({
-    name,
-    branch,
-    course,
-    currentPage,
-    role: "teacher",
-  });
+function SearchAllTeachers({ refetch }) {
   const dispatch = useDispatch();
   const courselist = ["ALL", "IELTS", "OET"];
   const [namefield, setNamefield] = useState("");
@@ -57,8 +44,12 @@ function SearchAllTeachers() {
     refetch();
   }
 
+  useEffect(() => {
+    handleReset();
+  }, []);
+
   return (
-    <section className=" rounded w-full bg-blue-100 pt-12 pb-16 px-8">
+    <section className=" rounded w-full bg-blue-100 pt-8 pb-12 md:pt-12 md:pb-16 px-3 md:px-8">
       <form className="m-0 rounded-none shadow-none p-0 max-w-full w-full">
         <h4 className="form-title mb-8 text-2xl font-semibold">Search</h4>
         <div className="form-center grid gap-4">

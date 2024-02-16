@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
@@ -8,9 +8,20 @@ import {
 } from "../slices/adminApiSlice";
 import Modal from "./Modal";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setTotalPages } from "../slices/searchSlice";
 
 function AdminStudentList() {
-  const { data: allStudents, refetch, isLoading } = useGetAllStudentsQuery();
+  const { currentPage, name, branch, course, searchOn } = useSelector(
+    (state) => state.search
+  );
+  const role = "student";
+  const {
+    data: allStudents,
+    refetch,
+    isLoading,
+  } = useGetAllStudentsQuery({ currentPage, role, name, branch, course });
+  const dispatch = useDispatch();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleteId, setDeleteId] = useState("");
 
@@ -32,6 +43,9 @@ function AdminStudentList() {
       toast.error(error?.data?.msg);
     }
   }
+  useEffect(() => {
+    dispatch(setTotalPages(allStudents?.numOfPages));
+  }, [allStudents, searchOn]);
 
   return isLoading ? (
     <Loading />
@@ -43,6 +57,11 @@ function AdminStudentList() {
           function1={cancelFunction}
           function2={confirmFunction}
         />
+      )}
+      {searchOn && (
+        <h4 className="form-title mb-8 text-2xl font-semibold">
+          Search Results
+        </h4>
       )}
       <h4 className="form-title mb-8 text-2xl font-semibold">
         {allStudents.totalStudents}

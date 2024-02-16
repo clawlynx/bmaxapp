@@ -28,7 +28,10 @@ export const allTeachers = async (req, res) => {
   const page = Number(req.query.currentPage) || 1;
   const limit = 2;
   const skip = (page - 1) * limit;
-  const teachers = await User.find(queryObject).skip(skip).limit(limit);
+  const teachers = await User.find(queryObject)
+    .sort("-createdAt")
+    .skip(skip)
+    .limit(limit);
 
   const totalTeachers = await User.countDocuments(queryObject);
   if (!teachers) throw new NotFoundError("No Teachers Found");
@@ -38,10 +41,30 @@ export const allTeachers = async (req, res) => {
 
 //get list of all students
 export const allStudents = async (req, res) => {
-  const students = (await User.find({ role: "student" })).reverse();
-  const totalStudents = await User.countDocuments({ role: "student" });
+  const { name, branch, course, role } = req.query;
+  const queryObject = {
+    role,
+  };
+  if (name && name !== "") {
+    queryObject.name = { $regex: name, $options: "i" };
+  }
+  if (branch && branch !== "ALL") {
+    queryObject.branch = branch;
+  }
+  if (course && course !== "ALL") {
+    queryObject.course = { $regex: course, $options: "i" };
+  }
+  const page = Number(req.query.currentPage) || 1;
+  const limit = 2;
+  const skip = (page - 1) * limit;
+  const students = await User.find(queryObject)
+    .sort("-createdAt")
+    .skip(skip)
+    .limit(limit);
+  const totalStudents = await User.countDocuments(queryObject);
   if (!students) throw new NotFoundError("No Students found");
-  res.status(200).json({ totalStudents, students });
+  const numOfPages = Math.ceil(totalStudents / limit);
+  res.status(200).json({ totalStudents, students, page, numOfPages });
 };
 
 //get list of teachers with pending verification

@@ -1,18 +1,43 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useGetCurrentStudentsQuery } from "../slices/teacherApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useCompleteStudentMutation,
+  useGetCompletedStudentsQuery,
+  useGetCurrentStudentsQuery,
+} from "../slices/teacherApiSlice";
 import Loading from "./Loading";
 import Modal from "./Modal";
+import { setUser } from "../slices/userSlice";
+import { toast } from "react-toastify";
 
 function CurrentStudentsView() {
   const [action, setAction] = useState(false);
   const [completeId, setCompleteId] = useState("");
-  const { data: students, isLoading } = useGetCurrentStudentsQuery();
+  const dispatch = useDispatch();
+  const { data: students, refetch, isLoading } = useGetCurrentStudentsQuery();
+  const [completeStudent, { isLoading: loadingcomplete }] =
+    useCompleteStudentMutation();
+  const { refetch: refetch2 } = useGetCompletedStudentsQuery();
 
   function cancelFunction() {
     setAction(false);
     setCompleteId("");
   }
+
+  async function confirmFunction() {
+    try {
+      const res = await completeStudent(completeId).unwrap();
+      setAction(false);
+      setCompleteId("");
+      refetch();
+      refetch2();
+      dispatch(setUser(res.teacher));
+      toast.success("Student added");
+    } catch (error) {
+      toast.error(error?.data?.msg);
+    }
+  }
+
   return isLoading ? (
     <Loading />
   ) : (
@@ -21,6 +46,7 @@ function CurrentStudentsView() {
         <Modal
           title={"Are you sure want to end the class of the student?"}
           function1={cancelFunction}
+          function2={confirmFunction}
         />
       )}
       <h1 className="text-xl md:text-2xl font-semibold">Current Students</h1>

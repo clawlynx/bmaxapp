@@ -31,7 +31,7 @@ function AnnouncementPage() {
 
   async function confirmFunction() {
     try {
-      await deleteAnnouncement(deleteId);
+      await deleteAnnouncement(deleteId).unwrap();
       setDeleteId("");
       setConfirm(false);
       refetch();
@@ -53,12 +53,14 @@ function AnnouncementPage() {
         />
       )}
       <h1 className="text-2xl mb-5 font-semibold">Announcements</h1>
-      <Link
-        to={"/dashboard/announcements/new"}
-        className=" bg-blue-700 text-white px-2 py-2 rounded-md hover:bg-blue-500 mb-4"
-      >
-        ADD ANNOUNCEMENT
-      </Link>
+      {userInfo.role === "admin" && (
+        <Link
+          to={"/dashboard/announcements/new"}
+          className=" bg-blue-700 text-white px-2 py-2 rounded-md hover:bg-blue-500 mb-4"
+        >
+          ADD ANNOUNCEMENT
+        </Link>
+      )}
       {announcements.length < 1 && (
         <div className="h-14 w-full bg-blue-200 flex items-center justify-start px-4 py-2 mt-4">
           <p>There are no announcements</p>

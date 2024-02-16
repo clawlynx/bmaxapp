@@ -15,9 +15,21 @@ export const teacherApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
       }),
     }),
+    completeStudent: builder.mutation({
+      query: (studentId) => ({
+        url: `${TUTOR_URL}/complete/${studentId}`,
+        method: "PATCH",
+      }),
+    }),
     getCurrentStudents: builder.query({
       query: () => ({
         url: `${TUTOR_URL}/current`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getCompletedStudents: builder.query({
+      query: () => ({
+        url: `${TUTOR_URL}/finished`,
       }),
       keepUnusedDataFor: 5,
     }),
@@ -36,4 +48,6 @@ export const {
   useAddStudentMutation,
   useGetCurrentStudentsQuery,
   useEvaluateStudentMutation,
+  useCompleteStudentMutation,
+  useGetCompletedStudentsQuery,
 } = teacherApiSlice;

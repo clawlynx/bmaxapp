@@ -86,6 +86,10 @@ const userSchema = new Schema(
       enum: ["admin", "teacher", "student"],
       default: "student",
     },
+    mainAdmin: {
+      type: Boolean,
+      default: false,
+    },
     password: String,
     studentDetails: {
       type: studentSchema,

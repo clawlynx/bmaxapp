@@ -20,6 +20,7 @@ export const RegisterUser = async (req, res) => {
 
   const isFirst = (await User.countDocuments()) === 0;
   const newRole = isFirst ? "admin" : isTeacher ? "teacher" : "student";
+  const main = isFirst ? true : false;
   const teacher = isTeacher
     ? {
         hasVerified: false,
@@ -40,6 +41,7 @@ export const RegisterUser = async (req, res) => {
     course,
     role: newRole,
     teacherDetails: teacher,
+    mainAdmin: main,
   });
   await newUser.save();
   const token = createJWT({ userId: newUser._id, role: newUser.role });

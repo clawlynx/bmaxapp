@@ -26,7 +26,7 @@ export const allTeachers = async (req, res) => {
     queryObject.course = { $regex: course, $options: "i" };
   }
   const page = Number(req.query.currentPage) || 1;
-  const limit = 2;
+  const limit = 20;
   const skip = (page - 1) * limit;
   const teachers = await User.find(queryObject)
     .sort("-createdAt")
@@ -55,7 +55,7 @@ export const allStudents = async (req, res) => {
     queryObject.course = { $regex: course, $options: "i" };
   }
   const page = Number(req.query.currentPage) || 1;
-  const limit = 2;
+  const limit = 20;
   const skip = (page - 1) * limit;
   const students = await User.find(queryObject)
     .sort("-createdAt")

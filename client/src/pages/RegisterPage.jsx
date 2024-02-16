@@ -40,9 +40,9 @@ function RegisterPage() {
           course,
           isTeacher,
           password,
-        });
-        toast.success("successfully registered");
+        }).unwrap();
         navigate("/dashboard");
+        toast.success("successfully registered");
       } catch (err) {
         toast.error(err?.data?.msg || err?.error);
       }

@@ -34,7 +34,7 @@ function AdminStudentList() {
   }
   async function confirmFunction() {
     try {
-      await deleteStudent(deleteId);
+      await deleteStudent(deleteId).unwrap();
       setConfirmDelete(false);
       setDeleteId("");
       refetch();

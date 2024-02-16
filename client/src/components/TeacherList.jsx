@@ -34,7 +34,7 @@ function TeacherList() {
   }
   async function confirmFunction() {
     try {
-      await deleteTeacher(deleteId);
+      await deleteTeacher(deleteId).unwrap();
       setConfirmDelete(false);
       setDeleteId("");
       refetch();

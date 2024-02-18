@@ -14,7 +14,7 @@ function StudentProfilePart() {
         <p>CLASS STARTED</p>
         <p>:</p>
         <p>
-          {!userInfo?.studentDetails?.active
+          {!userInfo?.studentDetails?.joinedOn
             ? "NOT STARTED"
             : userInfo.studentDetails.joinedOn.substring(0, 10)}
         </p>
@@ -23,7 +23,7 @@ function StudentProfilePart() {
         <p>CLASS ENDED</p>
         <p>:</p>
         <p>
-          {!userInfo?.studentDetails?.active
+          {!userInfo?.studentDetails?.endedOn
             ? "NOT STARTED"
             : userInfo.studentDetails.endedOn}
         </p>

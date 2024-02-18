@@ -36,7 +36,7 @@ function AttendancePage() {
         <div className="flex gap-4 md:gap-12 mb-5 font-semibold">
           <p>End Date</p>
           <p>:</p>
-          <p>{userInfo?.studentDetails?.endedOn || "N/A"}</p>
+          <p>{userInfo?.studentDetails?.endedOn?.substring(0, 10) || "N/A"}</p>
         </div>
       </div>
       <div className=" mt-7">

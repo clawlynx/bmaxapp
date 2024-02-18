@@ -99,6 +99,24 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getAdmins: builder.query({
+      query: () => ({
+        url: `${ADMIN_URL}/admins`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    makeAdmin: builder.mutation({
+      query: (Id) => ({
+        url: `${ADMIN_URL}/newadmin/${Id}`,
+        method: "PATCH",
+      }),
+    }),
+    removeAdmin: builder.mutation({
+      query: (Id) => ({
+        url: `${ADMIN_URL}/removeadmin/${Id}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -118,4 +136,7 @@ export const {
   useGetSingleStudentQuery,
   useUpdateStudentMutation,
   useGetStudentScoreStatsQuery,
+  useGetAdminsQuery,
+  useMakeAdminMutation,
+  useRemoveAdminMutation,
 } = adminApiSlice;

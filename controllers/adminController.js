@@ -231,3 +231,28 @@ export const getIndividualStats = async (req, res) => {
     highestsscore,
   });
 };
+
+//get list of admins
+export const getAdmins = async (req, res) => {
+  const admins = await User.find({ role: "admin" });
+  if (!admins) throw new NotFoundError("No admins found");
+  res.status(200).json(admins);
+};
+
+//make new Admin
+export const newAdmin = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new NotFoundError("No user found");
+  user.role = "admin";
+  await user.save();
+  res.status(200).json({ msg: "successful" });
+};
+
+// remove the user as admin
+export const removeAdmin = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new NotFoundError("No user found");
+  user.role = "teacher";
+  await user.save();
+  res.status(200).json({ msg: "successful" });
+};

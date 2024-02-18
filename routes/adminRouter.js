@@ -8,10 +8,13 @@ import {
   deleteTeacher,
   editStudent,
   editTeacher,
+  getAdmins,
   getIndividualStats,
   getPendingVerifications,
   getSingleStudent,
   getSingleTeacher,
+  newAdmin,
+  removeAdmin,
   totalCount,
   updateAnnouncement,
   verifyTeacher,
@@ -20,6 +23,7 @@ import {
   validateAnnouncementInput,
   validateUpdateTeacherInput,
 } from "../middleware/validationMiddleware.js";
+import { checkForMainAdmin } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
@@ -46,5 +50,8 @@ router.patch("/verify/:id", verifyTeacher);
 router.patch("/updateteacher/:id", validateUpdateTeacherInput, editTeacher);
 router.patch("/updatestudent/:id", validateUpdateTeacherInput, editStudent);
 router.get("/studentstats/:id", getIndividualStats);
+router.get("/admins", checkForMainAdmin, getAdmins);
+router.patch("/newadmin/:id", checkForMainAdmin, newAdmin);
+router.patch("/removeadmin/:id", checkForMainAdmin, removeAdmin);
 
 export default router;

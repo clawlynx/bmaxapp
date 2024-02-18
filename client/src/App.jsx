@@ -24,6 +24,7 @@ import TeacherDetailsAdmin from "./pages/TeacherDetailsAdmin";
 import EditTeacherAdmin from "./pages/EditTeacherAdmin";
 import EditStudentAdmin from "./pages/EditStudentAdmin";
 import StudentDetailsAdmin from "./pages/StudentDetailsAdmin";
+import AdminsListPage from "./pages/AdminsListPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -130,6 +131,10 @@ function App() {
             {
               path: "profile/edit",
               element: <EditProfilePage />,
+            },
+            {
+              path: "adminlist",
+              element: <AdminsListPage />,
             },
           ],
         },

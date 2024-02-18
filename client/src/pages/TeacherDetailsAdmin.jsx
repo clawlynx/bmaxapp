@@ -1,18 +1,65 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { useGetSingleTeacherQuery } from "../slices/adminApiSlice";
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  useGetAllTeachersQuery,
+  useGetSingleTeacherQuery,
+  useMakeAdminMutation,
+} from "../slices/adminApiSlice";
 import Loading from "../components/Loading";
 import DetailComponent from "../components/DetailComponent";
+import { useSelector } from "react-redux";
+import Modal from "../components/Modal";
+import { toast } from "react-toastify";
 
 function TeacherDetailsAdmin() {
   const { id } = useParams();
-
+  const navigate = useNavigate();
+  const [action, setAction] = useState(false);
+  const { userInfo } = useSelector((state) => state.user);
   const { data: teacher, isLoading } = useGetSingleTeacherQuery(id);
+  const [makeAdmin, { isLoading: loadingAdmin }] = useMakeAdminMutation();
+  const { name, branch, course, currentPage } = useSelector(
+    (state) => state.search
+  );
+  const { refetch } = useGetAllTeachersQuery({
+    name,
+    branch,
+    course,
+    currentPage,
+    role: "teacher",
+  });
+
+  function cancelFunction() {
+    setAction(false);
+  }
+  async function confirmFunction() {
+    if (teacher?.teacherDetails?.currentStudents?.length > 0) {
+      toast.warn("Cannot complete action. This teacher currently has students");
+      setAction(false);
+    } else {
+      try {
+        await makeAdmin(id).unwrap();
+        setAction(false);
+        navigate("/dashboard/all-teachers");
+        refetch();
+        toast.success("Successfully updated");
+      } catch (error) {
+        toast.error(error?.data?.msg);
+      }
+    }
+  }
 
   return isLoading ? (
     <Loading />
   ) : (
     <div>
+      {action && (
+        <Modal
+          title={"Are You sure want to make this teacher an admin?"}
+          function1={cancelFunction}
+          function2={confirmFunction}
+        />
+      )}
       <h1 className="text-xl md:text-2xl font-semibold">Details</h1>
       <div className="mt-3 mb-6 bg-blue-100 p-2 md:p-6 text-sm md:text-base">
         <DetailComponent title={"NAME"} detail={teacher?.name} />
@@ -45,9 +92,14 @@ function TeacherDetailsAdmin() {
         >
           Back
         </Link>
-        {/*<button className="bg-blue-800 text-white px-2 py-1 rounded-sm hover:bg-blue-500">
-          Make Admin
-        </button>*/}
+        {userInfo.mainAdmin && (
+          <button
+            className="bg-blue-800 text-white px-2 py-1 rounded-sm hover:bg-blue-500"
+            onClick={() => setAction(true)}
+          >
+            Make Admin
+          </button>
+        )}
       </div>
       <h1 className="text-xl md:text-2xl font-semibold">Current Students</h1>
       <div className=" mt-7 mb-5">

@@ -10,16 +10,16 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     getAllTeachers: builder.query({
-      query: ({ currentPage, role, name, branch, course }) => ({
+      query: ({ currentPage, role, name, branch, department, course }) => ({
         url: `${ADMIN_URL}/allteachers`,
-        params: { currentPage, role, name, branch, course },
+        params: { currentPage, role, name, branch, department, course },
       }),
       keepUnusedDataFor: 5,
     }),
     getAllStudents: builder.query({
-      query: ({ currentPage, role, name, branch, course }) => ({
+      query: ({ currentPage, role, name, branch, department, course }) => ({
         url: `${ADMIN_URL}/allstudents`,
-        params: { currentPage, role, name, branch, course },
+        params: { currentPage, role, name, branch, department, course },
       }),
       keepUnusedDataFor: 5,
     }),
@@ -117,6 +117,27 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
       }),
     }),
+    getUnassigned: builder.query({
+      query: ({ branch, department }) => ({
+        url: `${ADMIN_URL}/unassigned`,
+        params: { branch, department },
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getAvailableTeachers: builder.query({
+      query: ({ id, branch }) => ({
+        url: `${ADMIN_URL}/available/${id}`,
+        params: { branch },
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    assignStudent: builder.mutation({
+      query: (data) => ({
+        url: `${ADMIN_URL}/assign`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -139,4 +160,7 @@ export const {
   useGetAdminsQuery,
   useMakeAdminMutation,
   useRemoveAdminMutation,
+  useGetUnassignedQuery,
+  useGetAvailableTeachersQuery,
+  useAssignStudentMutation,
 } = adminApiSlice;

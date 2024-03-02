@@ -12,15 +12,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTotalPages } from "../slices/searchSlice";
 
 function TeacherList() {
-  const { currentPage, name, branch, course, searchOn } = useSelector(
-    (state) => state.search
-  );
+  const { currentPage, name, branch, department, course, searchOn } =
+    useSelector((state) => state.search);
   const role = "teacher";
   const {
     data: allTeachers,
     refetch,
     isLoading,
-  } = useGetAllTeachersQuery({ currentPage, role, name, branch, course });
+  } = useGetAllTeachersQuery({
+    currentPage,
+    role,
+    name,
+    department,
+    branch,
+    course,
+  });
 
   const dispatch = useDispatch();
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -74,7 +80,7 @@ function TeacherList() {
               <tr className="border-b-2 border-b-blue-300">
                 <th className=" tablecolumn">NAME</th>
                 <th className=" tablecolumn">BRANCH</th>
-                <th className="tablecolumn">COURSE</th>
+                <th className="tablecolumn">DEPARTMENT</th>
                 <th className="tablecolumn">ACTION</th>
               </tr>
             </thead>
@@ -83,11 +89,7 @@ function TeacherList() {
                 <tr key={x._id}>
                   <td className=" tablecolumn">{x.name}</td>
                   <td className=" tablecolumn">{x.branch}</td>
-                  <td className=" tablecolumn">
-                    {x.course.includes("OET")
-                      ? x.course.substring(0, 3)
-                      : x.course.substring(0, 5)}
-                  </td>
+                  <td className=" tablecolumn">{x.department}</td>
                   <td className=" tablecolumn flex flex-col gap-1 justify-center items-center md:flex-row">
                     <Link
                       to={`/dashboard/all-teachers/${x._id}`}

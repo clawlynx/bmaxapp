@@ -63,14 +63,7 @@ function TeacherDetailsAdmin() {
       <h1 className="text-xl md:text-2xl font-semibold">Details</h1>
       <div className="mt-3 mb-6 bg-blue-100 p-2 md:p-6 text-sm md:text-base">
         <DetailComponent title={"NAME"} detail={teacher?.name} />
-        <DetailComponent
-          title={"COURSE"}
-          detail={
-            teacher?.course.includes("OET")
-              ? teacher?.course.substring(0, 3)
-              : teacher?.course.substring(0, 5)
-          }
-        />
+        <DetailComponent title={"DEPARTMENT"} detail={teacher?.department} />
         <DetailComponent title={"BRANCH"} detail={teacher?.branch} />
         <DetailComponent title={"EMAIL"} detail={teacher?.email} />
         <DetailComponent title={"ADDRESS"} detail={teacher?.address} />

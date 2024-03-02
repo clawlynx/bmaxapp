@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
 import FormElement from "./FormElement";
 import FormSelectElement from "./FormSelectElement";
-import { branches } from "../../../utils/constants";
+import { branches, courses, departments } from "../../../utils/constants";
 
 import { useDispatch } from "react-redux";
 import {
   setBranch,
   setCourse,
   setCurrentPage,
+  setDepartment,
   setName,
   setSearchOff,
   setSearchOn,
   setTotalPages,
 } from "../slices/searchSlice";
 
-function SearchAllTeachers({ refetch }) {
+function SearchAllTeachers({ refetch, isStudent }) {
   const dispatch = useDispatch();
-  const courselist = ["ALL", "IELTS", "OET"];
+
   const [namefield, setNamefield] = useState("");
   const [branchfield, setBranchfield] = useState("ALL");
   const [coursefield, setCoursefield] = useState("ALL");
+  const [departmentfield, setDepartmentfield] = useState("ALL");
 
   async function handleclick(e) {
     e.preventDefault();
     dispatch(setName(namefield));
     dispatch(setCourse(coursefield));
     dispatch(setBranch(branchfield));
+    dispatch(setDepartment(departmentfield));
     dispatch(setCurrentPage(1));
     dispatch(setTotalPages(1));
     dispatch(setSearchOn());
@@ -35,6 +38,7 @@ function SearchAllTeachers({ refetch }) {
     dispatch(setName(""));
     dispatch(setCourse("ALL"));
     dispatch(setBranch("ALL"));
+    dispatch(setDepartment("ALL"));
     dispatch(setCurrentPage(1));
     dispatch(setTotalPages(1));
     dispatch(setSearchOff());
@@ -60,11 +64,20 @@ function SearchAllTeachers({ refetch }) {
             onChange={(e) => setNamefield(e.target.value)}
           />
           <FormSelectElement
-            name={"Course"}
-            list={courselist}
-            defaultValue={coursefield}
-            onChange={(e) => setCoursefield(e.target.value)}
+            name={"Department"}
+            list={["ALL", ...Object.values(departments)]}
+            defaultValue={departmentfield}
+            onChange={(e) => setDepartmentfield(e.target.value)}
           />
+          {isStudent && (
+            <FormSelectElement
+              name={"Course"}
+              list={["ALL", ...Object.values(courses)]}
+              defaultValue={coursefield}
+              onChange={(e) => setCoursefield(e.target.value)}
+            />
+          )}
+
           <FormSelectElement
             name={"Branch"}
             list={["ALL", ...Object.values(branches)]}

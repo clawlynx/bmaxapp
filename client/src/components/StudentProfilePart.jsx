@@ -24,7 +24,7 @@ function StudentProfilePart() {
         <p>:</p>
         <p>
           {!userInfo?.studentDetails?.endedOn
-            ? "NOT STARTED"
+            ? "N/A"
             : userInfo.studentDetails.endedOn.substring(0, 10)}
         </p>
       </div>

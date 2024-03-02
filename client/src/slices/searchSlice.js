@@ -7,6 +7,7 @@ const initialState = {
   name: "",
   branch: "ALL",
   course: "ALL",
+  department: "ALL",
 };
 
 const searchSlice = createSlice({
@@ -28,6 +29,9 @@ const searchSlice = createSlice({
     setCourse: (state, { payload }) => {
       state.course = payload;
     },
+    setDepartment: (state, { payload }) => {
+      state.department = payload;
+    },
     setSearchOn: (state) => {
       state.searchOn = true;
     },
@@ -46,4 +50,5 @@ export const {
   setName,
   setSearchOn,
   setSearchOff,
+  setDepartment,
 } = searchSlice.actions;

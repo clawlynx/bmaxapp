@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 
 function SingleAnnouncementPage() {
   const { id } = useParams();
+
   const { data: announcement, isLoading } = useGetSingleAnnouncementQuery(id);
   return isLoading ? (
     <Loading />

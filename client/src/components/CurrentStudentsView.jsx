@@ -53,7 +53,7 @@ function CurrentStudentsView() {
       <div className=" mt-7 mb-5">
         {students.length < 1 && (
           <h1 className="bg-red-800 text-white px-2 py-2">
-            You Dont have any active students now. Please add new Students
+            You Dont have any active students now.
           </h1>
         )}
         {students.length > 0 && (

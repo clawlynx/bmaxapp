@@ -6,6 +6,7 @@ import { PiStudent } from "react-icons/pi";
 import { BsBookmarks } from "react-icons/bs";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
+import { MdOutlineAssignmentTurnedIn } from "react-icons/md";
 
 export const studentLinks = [
   { text: "profile", path: ".", icon: <CgProfile /> },
@@ -46,5 +47,11 @@ export const adminLinks = [
     path: "verification",
     icon: <MdOutlineVerifiedUser />,
     urlword: "verification",
+  },
+  {
+    text: "assign",
+    path: "assign",
+    icon: <MdOutlineAssignmentTurnedIn />,
+    urlword: "assign",
   },
 ];

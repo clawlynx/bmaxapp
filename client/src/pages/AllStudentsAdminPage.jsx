@@ -6,19 +6,19 @@ import { useGetAllStudentsQuery } from "../slices/adminApiSlice";
 import Pagination from "../components/Pagination";
 
 function AllStudentsAdminPage() {
-  const { name, branch, course, currentPage, totalPage } = useSelector(
-    (state) => state.search
-  );
+  const { name, branch, course, department, currentPage, totalPage } =
+    useSelector((state) => state.search);
   const { refetch } = useGetAllStudentsQuery({
     name,
     branch,
     course,
+    department,
     currentPage,
     role: "student",
   });
   return (
     <div>
-      <SearchAllTeachers refetch={refetch} />
+      <SearchAllTeachers refetch={refetch} isStudent />
       <AdminStudentList />
       {totalPage > 1 && (
         <div className=" flex justify-end mt-4">

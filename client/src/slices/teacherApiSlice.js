@@ -3,18 +3,6 @@ import { apiSlice } from "./apiSlice";
 
 export const teacherApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUnassigned: builder.query({
-      query: () => ({
-        url: `${TUTOR_URL}/unassigned`,
-      }),
-      keepUnusedDataFor: 5,
-    }),
-    addStudent: builder.mutation({
-      query: (studentId) => ({
-        url: `${TUTOR_URL}/assign/${studentId}`,
-        method: "PATCH",
-      }),
-    }),
     completeStudent: builder.mutation({
       query: (studentId) => ({
         url: `${TUTOR_URL}/complete/${studentId}`,
@@ -44,8 +32,6 @@ export const teacherApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetUnassignedQuery,
-  useAddStudentMutation,
   useGetCurrentStudentsQuery,
   useEvaluateStudentMutation,
   useCompleteStudentMutation,

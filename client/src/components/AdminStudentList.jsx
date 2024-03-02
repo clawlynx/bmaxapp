@@ -12,15 +12,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTotalPages } from "../slices/searchSlice";
 
 function AdminStudentList() {
-  const { currentPage, name, branch, course, searchOn } = useSelector(
-    (state) => state.search
-  );
+  const { currentPage, name, branch, department, course, searchOn } =
+    useSelector((state) => state.search);
   const role = "student";
   const {
     data: allStudents,
     refetch,
     isLoading,
-  } = useGetAllStudentsQuery({ currentPage, role, name, branch, course });
+  } = useGetAllStudentsQuery({
+    currentPage,
+    role,
+    name,
+    department,
+    branch,
+    course,
+  });
   const dispatch = useDispatch();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleteId, setDeleteId] = useState("");
@@ -83,11 +89,7 @@ function AdminStudentList() {
                 <tr key={x._id}>
                   <td className=" tablecolumn">{x.name}</td>
                   <td className=" tablecolumn">{x.branch}</td>
-                  <td className=" tablecolumn">
-                    {x.course.includes("OET")
-                      ? x.course.substring(0, 3)
-                      : x.course.substring(0, 5)}
-                  </td>
+                  <td className=" tablecolumn">{x.course}</td>
                   <td className=" tablecolumn flex flex-col gap-1 justify-center items-center md:flex-row">
                     <Link
                       to={`/dashboard/all-students/${x._id}`}

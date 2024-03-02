@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addStudent,
   allStudents,
   allTeachers,
   createAnnouncement,
@@ -9,10 +10,12 @@ import {
   editStudent,
   editTeacher,
   getAdmins,
+  getAvailableTeachers,
   getIndividualStats,
   getPendingVerifications,
   getSingleStudent,
   getSingleTeacher,
+  getUnassignedStudents,
   newAdmin,
   removeAdmin,
   totalCount,
@@ -53,5 +56,8 @@ router.get("/studentstats/:id", getIndividualStats);
 router.get("/admins", checkForMainAdmin, getAdmins);
 router.patch("/newadmin/:id", checkForMainAdmin, newAdmin);
 router.patch("/removeadmin/:id", checkForMainAdmin, removeAdmin);
+router.get("/unassigned", getUnassignedStudents);
+router.get("/available/:id", getAvailableTeachers);
+router.patch("/assign", addStudent);
 
 export default router;

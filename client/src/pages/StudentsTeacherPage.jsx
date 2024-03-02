@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CurrentStudentsView from "../components/CurrentStudentsView";
 import CompletedStudents from "../components/CompletedStudents";
-import UnassignedStudents from "../components/UnassignedStudents";
 
 function StudentsTeacherPage() {
   const { userInfo } = useSelector((state) => state.user);
@@ -16,7 +15,7 @@ function StudentsTeacherPage() {
       ) : (
         <div>
           <CurrentStudentsView />
-          <UnassignedStudents />
+
           <CompletedStudents />
         </div>
       )}

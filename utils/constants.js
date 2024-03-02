@@ -16,3 +16,8 @@ export const courses = {
   OET_2_MONTH: "OET 2 MONTH",
   OET_3_MONTH: "OET 3 MONTH",
 };
+
+export const departments = {
+  IELTS: "IELTS",
+  OET: "OET",
+};

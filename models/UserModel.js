@@ -71,6 +71,11 @@ const userSchema = new Schema(
     age: {
       type: Number,
     },
+    department: {
+      type: String,
+      enum: ["IELTS", "OET"],
+      default: "IELTS",
+    },
     course: {
       type: String,
       enum: Object.values(courses),

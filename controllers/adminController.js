@@ -12,7 +12,7 @@ export const totalCount = async (req, res) => {
 
 //get list of all teachers
 export const allTeachers = async (req, res) => {
-  const { name, branch, course, role } = req.query;
+  const { name, branch, course, department, role } = req.query;
   const queryObject = {
     role,
   };
@@ -22,8 +22,11 @@ export const allTeachers = async (req, res) => {
   if (branch && branch !== "ALL") {
     queryObject.branch = branch;
   }
+  if (department && department !== "ALL") {
+    queryObject.department = department;
+  }
   if (course && course !== "ALL") {
-    queryObject.course = { $regex: course, $options: "i" };
+    queryObject.course = course;
   }
   const page = Number(req.query.currentPage) || 1;
   const limit = 20;
@@ -41,7 +44,8 @@ export const allTeachers = async (req, res) => {
 
 //get list of all students
 export const allStudents = async (req, res) => {
-  const { name, branch, course, role } = req.query;
+  const { name, branch, course, department, role } = req.query;
+
   const queryObject = {
     role,
   };
@@ -51,8 +55,11 @@ export const allStudents = async (req, res) => {
   if (branch && branch !== "ALL") {
     queryObject.branch = branch;
   }
+  if (department && department !== "ALL") {
+    queryObject.department = department;
+  }
   if (course && course !== "ALL") {
-    queryObject.course = { $regex: course, $options: "i" };
+    queryObject.course = course;
   }
   const page = Number(req.query.currentPage) || 1;
   const limit = 20;
@@ -69,7 +76,10 @@ export const allStudents = async (req, res) => {
 
 //get list of teachers with pending verification
 export const getPendingVerifications = async (req, res) => {
-  const users = await User.find({ "teacherDetails.hasVerified": false });
+  const users = await User.find({
+    "teacherDetails.hasVerified": false,
+    role: "teacher",
+  });
   if (!users) throw new NotFoundError("No Users found");
   res.status(200).json(users);
 };
@@ -255,4 +265,56 @@ export const removeAdmin = async (req, res) => {
   user.role = "teacher";
   await user.save();
   res.status(200).json({ msg: "successful" });
+};
+
+//get Unassigned Students
+export const getUnassignedStudents = async (req, res) => {
+  const { branch, department } = req.query;
+  const queryObject = {
+    role: "student",
+    "studentDetails.teacher": undefined,
+  };
+  if (branch && branch !== "ALL") {
+    queryObject.branch = branch;
+  }
+  if (department && department !== "ALL") {
+    queryObject.department = department;
+  }
+  const students = await User.find(queryObject);
+  if (!students) throw new NotFoundError("No students found");
+  res.status(200).json(students);
+};
+
+//get list of available teachers for assigning
+export const getAvailableTeachers = async (req, res) => {
+  const { id } = req.params;
+  const { branch } = req.query;
+  const student = await User.findById(id);
+  if (!student) throw new NotFoundError("No students found");
+  const queryObject = {
+    department: student.department,
+    role: "teacher",
+  };
+  if (branch && branch !== "ALL") {
+    queryObject.branch = branch;
+  }
+  const teachers = await User.find(queryObject);
+  if (!teachers) throw new NotFoundError("No teachers found");
+  res.status(200).json(teachers);
+};
+
+//assigning  a student
+export const addStudent = async (req, res) => {
+  const { studentId, teacherId } = req.body;
+  const student = await User.findById(studentId);
+  if (!student) throw new NotFoundError("No Student found");
+  const teacher = await User.findById(teacherId);
+  if (!teacher) throw new NotFoundError("No teacher found");
+  student.studentDetails.active = true;
+  student.studentDetails.teacher = teacher.name;
+  student.studentDetails.joinedOn = new Date(Date.now()).toISOString();
+  await student.save();
+  teacher.teacherDetails.currentStudents.push(student._id);
+  await teacher.save();
+  res.status(200).json({ msg: "successfully added", teacher });
 };

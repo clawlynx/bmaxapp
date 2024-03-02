@@ -23,14 +23,12 @@ function ProfilePage() {
       <div className="mt-10">
         {userInfo?.role !== "admin" && (
           <div className=" flex justify-center gap-4 md:gap-10 mb-5 text-base md:text-lg font-semibold">
-            <p>COURSE</p>
+            <p>{userInfo?.role === "student" ? `COURSE` : `DEPARTMENT`}</p>
             <p>:</p>
             <p>
               {userInfo?.role === "student"
                 ? userInfo?.course
-                : userInfo?.course?.includes("OET")
-                ? userInfo?.course?.substring(0, 3)
-                : userInfo?.course?.substring(0, 5)}
+                : userInfo?.department}
             </p>
           </div>
         )}

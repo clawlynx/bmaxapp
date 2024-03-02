@@ -7,13 +7,13 @@ import { useSelector } from "react-redux";
 import Pagination from "../components/Pagination";
 
 function AllTeachersAdminPage() {
-  const { name, branch, course, currentPage, totalPage } = useSelector(
-    (state) => state.search
-  );
+  const { name, branch, course, department, currentPage, totalPage } =
+    useSelector((state) => state.search);
   const { refetch } = useGetAllTeachersQuery({
     name,
     branch,
     course,
+    department,
     currentPage,
     role: "teacher",
   });

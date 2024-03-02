@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FormElement from "../components/FormElement";
 import { Link, useNavigate } from "react-router-dom";
 import FormSelectElement from "../components/FormSelectElement";
-import { branches, courses } from "../../../utils/constants";
+import { branches, courses, departments } from "../../../utils/constants";
 import { toast } from "react-toastify";
 import { useRegisterMutation } from "../slices/userApiSlice";
 
@@ -15,6 +15,7 @@ function RegisterPage() {
   const [address, setAddress] = useState("");
   const [age, setAge] = useState(0);
   const [branch, setBranch] = useState(branches?.MEVARAM || "");
+  const [department, setDepartment] = useState(departments?.IELTS || "");
   const [course, setCourse] = useState(courses?.IELTS_1_MONTH || "");
   const [isTeacher, setIsTeacher] = useState(false);
   const [password, setPassword] = useState("");
@@ -22,6 +23,8 @@ function RegisterPage() {
 
   const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
+  const IELTSCourses = ["IELTS 1 MONTH", "IELTS 2 MONTH", "IELTS 3 MONTH"];
+  const OETCourses = ["OET 1 MONTH", "OET 2 MONTH", "OET 3 MONTH"];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +38,7 @@ function RegisterPage() {
           email,
           phone,
           address,
+          department,
           age,
           branch,
           course,
@@ -99,12 +103,7 @@ function RegisterPage() {
           defaultValue={branch}
           onChange={(e) => setBranch(e.target.value)}
         />
-        <FormSelectElement
-          name={"course"}
-          list={Object.values(courses)}
-          defaultValue={course}
-          onChange={(e) => setCourse(e.target.value)}
-        />
+
         <div className=" flex items-center justify-start gap-3 mb-5">
           <label className="" htmlFor="teacher">
             Teacher
@@ -128,6 +127,21 @@ function RegisterPage() {
         <p className=" text-sm mb-5 text-red-500">
           Note: Teacher registrations will be subjected to verification
         </p>
+        <FormSelectElement
+          name={"department"}
+          list={Object.values(departments)}
+          defaultValue={department}
+          onChange={(e) => setDepartment(e.target.value)}
+        />
+        {!isTeacher && (
+          <FormSelectElement
+            name={"course"}
+            list={department === "IELTS" ? IELTSCourses : OETCourses}
+            defaultValue={course}
+            onChange={(e) => setCourse(e.target.value)}
+          />
+        )}
+
         <FormElement
           type={"password"}
           name={"password"}

@@ -14,7 +14,7 @@ import { RiSpeakFill } from "react-icons/ri";
 function StudentDetailsAdmin() {
   const { id } = useParams();
   const { data: student, isLoading } = useGetSingleStudentQuery(id);
-  console.log(student);
+
   const { data: scoreStats, isLoading: loadingStats } =
     useGetStudentScoreStatsQuery(id);
 

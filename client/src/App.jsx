@@ -25,6 +25,8 @@ import EditTeacherAdmin from "./pages/EditTeacherAdmin";
 import EditStudentAdmin from "./pages/EditStudentAdmin";
 import StudentDetailsAdmin from "./pages/StudentDetailsAdmin";
 import AdminsListPage from "./pages/AdminsListPage";
+import AssignAdminPage from "./pages/AssignAdminPage";
+import AssignToTeacherPage from "./pages/AssignToTeacherPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -135,6 +137,14 @@ function App() {
             {
               path: "adminlist",
               element: <AdminsListPage />,
+            },
+            {
+              path: "assign",
+              element: <AssignAdminPage />,
+            },
+            {
+              path: "assign/:id",
+              element: <AssignToTeacherPage />,
             },
           ],
         },
